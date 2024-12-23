@@ -1,24 +1,33 @@
 {
-  "name": "azure-apidocs",
+  "name": "api-docs-ui",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist && tsc"
+    "build": "rm -rf ./dist && tsc && tsc-alias"
+  },
+  "peerDependencies": {
+    "@fluentui/react": "8.x",
+    "@fluentui/react-components": ">=9.47 <10",
+    "@fluentui/react-icons": "2.x",
+    "react": ">=18"
   },
   "dependencies": {
-    "@fluentui/react": "^8.117.7",
-    "@fluentui/react-components": "^9.47.5",
-    "@fluentui/react-icons": "^2.0.237",
-    "inversify-react": "^1.1.1",
-    "react": "^18.2.0",
-    "react-markdown": "^9.0.1",
-    "rehype-raw": "^7.0.0",
-    "rehype-truncate": "^1.2.2",
-    "remark-gfm": "^4.0.0"
+    "classnames": "2.5.1",
+    "react-markdown": "9.0.1",
+    "rehype-raw": "7.0.0",
+    "rehype-truncate": "1.2.2",
+    "remark-gfm": "4.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.2"
+    "@fluentui/react": "8.121.2",
+    "@fluentui/react-components": "9.47.5",
+    "@fluentui/react-icons": "2.0.237",
+    "@types/react": "18.2.22",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tsc-alias": "1.8.10",
+    "typescript": "5.7.2"
   }
 }

@@ -8,17 +8,21 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "declaration": true,
+        "baseUrl": "./src",
+        "typeRoots": ["./src/types"],
         "declarationDir": "./dist/types",
         "outDir": "./dist",
         "sourceMap": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
         "removeComments": true,
-        "noLib": false,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "allowUnreachableCode": true,
-        "incremental": true
+        "incremental": true,
+        "paths": {
+            "@/*": ["./*"]
+        }
     },
     "include": [
         "src/**/*.ts",
