@@ -6,6 +6,8 @@ import { toggleSetValue } from '@/utils/toggleSetValue';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 interface BaseProps {
+  apis?: unknown;
+  apisByTag?: unknown;
   showApiType?: boolean;
   apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
 }
@@ -29,7 +31,12 @@ const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisB
     if (!apis.length) {
       return (
         <TableRow>
-          <TableCell colSpan={showApiType ? 3 : 2} style={{ textAlign: "center" }}>No APIs to display</TableCell>
+          <TableCell
+            colSpan={showApiType ? 3 : 2}
+            style={{ textAlign: 'center' }}
+          >
+            No APIs to display
+          </TableCell>
         </TableRow>
       );
     }
@@ -37,13 +44,19 @@ const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisB
     return apis.map((api) => (
       <TableRow key={api.name}>
         <TableCell>
-          <a title={api.displayName} {...apiLinkPropsProvider(api)}>
+          <a
+            title={api.displayName}
+            {...apiLinkPropsProvider(api)}
+          >
             {api.displayName}
             {/* {!!api.apiVersion && " - " + api.apiVersion} */}
           </a>
         </TableCell>
-        <TableCell style={{padding: ".5rem 0"}}>
-          <MarkdownRenderer markdown={api.description} maxLength={MD_MAX_LENGTH} />
+        <TableCell style={{padding: '.5rem 0'}}>
+          <MarkdownRenderer
+            markdown={api.description}
+            maxLength={MD_MAX_LENGTH}
+          />
         </TableCell>
         <TableCell>{api.type}</TableCell>
       </TableRow>
@@ -61,8 +74,11 @@ const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisB
         >
           <TableCell>
             <button className="no-border align-center">
-              <span className="strong" style={{ marginRight: ".375rem" }}>
-                  {tag}
+              <span
+                className="strong"
+                style={{ marginRight: '.375rem' }}
+              >
+                {tag}
               </span>
 
               <ExpandIcon isExpanded={expandedTags.has(tag)} />
@@ -86,7 +102,11 @@ const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisB
   }
 
   return (
-    <Table className="fui-table" size="small" aria-label="APIs List table">
+    <Table
+      className="fui-table"
+      size="small"
+      aria-label="APIs List table"
+    >
       <TableHeader>
         <TableRow className="fui-table-headerRow">
           <TableHeaderCell>
@@ -97,7 +117,7 @@ const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisB
           </TableHeaderCell>
 
           {showApiType && (
-            <TableHeaderCell style={{ width: "8em" }}>
+            <TableHeaderCell style={{ width: '8em' }}>
               <span className="strong">Type</span>
             </TableHeaderCell>
           )}
