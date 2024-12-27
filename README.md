@@ -1,16 +1,13 @@
-# Project
+# @microsoft/api-docs-ui
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This package provides a set of React components to render API documentation in a consistent way.
 
-As the maintainer of this project, please make a few updates:
+Installation:
+```bash
+npm install @microsoft/api-docs-ui
+```
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
-
-
+[API reference](https://microsoft.github.io/api-docs-ui/)
 
 ## Trademarks
 
