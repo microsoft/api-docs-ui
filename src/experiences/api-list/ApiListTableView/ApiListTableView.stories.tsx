@@ -5,7 +5,23 @@ import ApiListTableView from './ApiListTableView';
 const meta = {
   title: 'Api List/ApiListTableView',
   component: ApiListTableView,
-  argTypes: { showApiType: { control: 'boolean' } },
+  argTypes: {
+    apis: {
+      description: 'A list of APIs or API groups to display.',
+    },
+    showApiType: {
+      description: 'If true - show the API type column.',
+      control: 'boolean',
+      table: {
+        defaultValue: {
+          summary: 'false',
+        },
+      },
+    },
+    apiLinkPropsProvider: {
+      description: 'A function that accepts API object and returns props for the link to the API details page.',
+    },
+  },
   args: {
     showApiType: true,
     apiLinkPropsProvider: () => ({
