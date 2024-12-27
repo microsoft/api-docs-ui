@@ -1,2 +1,6 @@
-.idea/
-*.iml
+*
+!src/**
+!dist/**
+!package.json
+!README.md
+!LICENSE

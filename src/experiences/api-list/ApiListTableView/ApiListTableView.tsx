@@ -28,7 +28,7 @@ export const ApiListTableView: React.FC<Props> = ({
 }) => {
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
 
-  const isApisGrouped = 'tag' in apis[0] && 'items' in apis[0];
+  const isApisGrouped = apis[0] && 'tag' in apis[0] && 'items' in apis[0];
 
   function renderApiRows(apis?: Api[]) {
     if (!apis.length) {
