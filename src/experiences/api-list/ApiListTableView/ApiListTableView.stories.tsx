@@ -1,12 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
 import { Api } from '@/types/api';
-import { ApiListTableView } from './ApiListTableView';
+import ApiListTableView from './ApiListTableView';
 
 const meta = {
   title: 'Api List/ApiListTableView',
   component: ApiListTableView,
-  // parameters: { layout: 'centered' },
   argTypes: { showApiType: { control: 'boolean' } },
   args: {
     showApiType: true,
@@ -15,6 +13,11 @@ const meta = {
         e.preventDefault();
       },
     }),
+  },
+  parameters: {
+    docs: {
+      subtitle: 'A table representation of the API list. It can render either a flat list of APIs or APIs grouped by tag.',
+    },
   },
 } satisfies Meta<typeof ApiListTableView>;
 
@@ -79,7 +82,7 @@ export const FlatList: Story = { args: { apis } };
 
 export const GroupedByTag: Story = {
   args: {
-    apisByTag: Object.keys(apiListByTag).map((tag) => ({
+    apis: Object.keys(apiListByTag).map((tag) => ({
       tag,
       items: apiListByTag[tag],
     })),

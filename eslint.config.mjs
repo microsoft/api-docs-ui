@@ -40,28 +40,10 @@ export default [
 
     rules: {
       'curly': ['error', 'all'],
-      'max-len': ['error', { code: 120 }],
-      'object-curly-newline': [
-        'error',
-        {
-          ObjectExpression: {
-            multiline: true,
-            minProperties: 3,
-          },
-          ObjectPattern: {
-            multiline: true,
-            minProperties: 3,
-          },
-          ImportDeclaration: {
-            multiline: true,
-            minProperties: 3,
-          },
-          ExportDeclaration: {
-            multiline: true,
-            minProperties: 3,
-          },
-        },
-      ],
+      '@stylistic/max-len': ['error', {
+        code: 120,
+        ignoreStrings: true,
+      }],
       'object-curly-spacing': ['error', 'always'],
       'quotes': ['error', 'single'],
       'quote-props': ['error', 'consistent-as-needed'],

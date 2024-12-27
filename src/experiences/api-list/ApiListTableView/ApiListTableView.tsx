@@ -13,32 +13,22 @@ import { Api, ApiGroup } from '@/types/api';
 import { toggleSetValue } from '@/utils/toggleSetValue';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 
-interface BaseProps {
-  apis?: unknown;
-  apisByTag?: unknown;
+export interface Props {
+  apis: Api[] | ApiGroup[];
   showApiType?: boolean;
   apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
 }
 
-export interface ApiListProps extends BaseProps {
-  apis: Api[];
-  apisByTag?: never;
-}
-
-export interface ApisByTagProps extends BaseProps {
-  apis?: never;
-  apisByTag: ApiGroup[];
-}
-
 const MD_MAX_LENGTH = 120;
 
-export const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({
+export const ApiListTableView: React.FC<Props> = ({
   apis,
-  apisByTag,
   showApiType,
   apiLinkPropsProvider,
 }) => {
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
+
+  const isApisGrouped = 'tag' in apis[0] && 'items' in apis[0];
 
   function renderApiRows(apis?: Api[]) {
     if (!apis.length) {
@@ -104,10 +94,10 @@ export const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({
   }
 
   function renderBody() {
-    if (apis) {
-      return renderApiRows(apis);
+    if (isApisGrouped) {
+      return renderApisByTagRows(apis as ApiGroup[]);
     }
-    return renderApisByTagRows(apisByTag);
+    return renderApiRows(apis as Api[]);
   }
 
   return (
