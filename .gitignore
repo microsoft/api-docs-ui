@@ -2,6 +2,7 @@ node_modules/
 .idea/
 .vscode/
 dist/
+storybook-static/
 *.iml
 npm-debug.log*
 *storybook.log
