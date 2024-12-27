@@ -61,3 +61,18 @@ and components that are not meant to be used outside the project should not have
 
 Be sure to list all experience properties with their descriptions, default values etc. as well as
 a couple of stories showcasing the component in different configurations.
+
+## Testing locally
+If you want to test your component locally in another project, chances are you won't be able to use `npm link`
+because of how node modules are resolved with this method. To work around this you can use `yalc` to simulate actual
+publishing of the package and then install it in your project.
+
+To publish run in current project:
+```bash
+yalc publish
+```
+
+To install in your target project run:
+```bash
+yalc add @microsoft/api-docs-ui
+```

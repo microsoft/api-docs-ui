@@ -1,5 +1,5 @@
 {
-  "name": "api-docs-ui",
+  "name": "@microsoft/api-docs-ui",
   "version": "1.0.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
