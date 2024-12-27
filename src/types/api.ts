@@ -2,11 +2,11 @@ export interface Api {
     /** Unique API identifier. */
     name: string;
     /** Display name of API, e.g. "HTTP Bin". */
-    displayName?: string;
+    displayName: string;
     /** Description of API. */
-    description?: string;
+    description: string;
     /** Determines type of API, e.g. "soap". */
-    type?: string;
+    type: string;
 }
 
 export interface ApiGroup {

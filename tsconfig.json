@@ -1,35 +1,29 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "strict": false,
-        "jsx": "react",
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "declaration": true,
-        "baseUrl": "./src",
-        "typeRoots": ["./src/types"],
-        "declarationDir": "./dist/types",
-        "outDir": "./dist",
-        "sourceMap": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "removeComments": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "allowUnreachableCode": true,
-        "incremental": true,
-        "paths": {
-            "@/*": ["./*"]
-        }
-    },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/types",
+    "typeRoots": ["./src/types"],
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

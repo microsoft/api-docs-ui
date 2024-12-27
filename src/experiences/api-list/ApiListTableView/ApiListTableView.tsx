@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from '@fluentui/react-components';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+  Button,
+} from '@fluentui/react-components';
 import ExpandIcon from '@/components/ExpandIcon';
 import { Api, ApiGroup } from '@/types/api';
 import { toggleSetValue } from '@/utils/toggleSetValue';
@@ -12,19 +20,24 @@ interface BaseProps {
   apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
 }
 
-interface ApiListProps extends BaseProps {
+export interface ApiListProps extends BaseProps {
   apis: Api[];
   apisByTag?: never;
 }
 
-interface ApisByTagProps extends BaseProps {
+export interface ApisByTagProps extends BaseProps {
   apis?: never;
   apisByTag: ApiGroup[];
 }
 
 const MD_MAX_LENGTH = 120;
 
-const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisByTag, showApiType, apiLinkPropsProvider }) => {
+export const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({
+  apis,
+  apisByTag,
+  showApiType,
+  apiLinkPropsProvider,
+}) => {
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
 
   function renderApiRows(apis?: Api[]) {
@@ -52,13 +65,13 @@ const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisB
             {/* {!!api.apiVersion && " - " + api.apiVersion} */}
           </a>
         </TableCell>
-        <TableCell style={{padding: '.5rem 0'}}>
+        <TableCell style={{ padding: '.5rem 0' }}>
           <MarkdownRenderer
             markdown={api.description}
             maxLength={MD_MAX_LENGTH}
           />
         </TableCell>
-        <TableCell>{api.type}</TableCell>
+        {showApiType && <TableCell>{api.type}</TableCell>}
       </TableRow>
     ));
   }
@@ -66,23 +79,19 @@ const ApiListTableView: React.FC<ApiListProps | ApisByTagProps> = ({ apis, apisB
   function renderApisByTagRows(apisByTag: ApiGroup[]) {
     return apisByTag.map(({ tag, items }) => (
       <React.Fragment key={tag}>
-        <TableRow
-          className="fui-table-collapsibleRow"
-          onClick={() =>
-            setExpandedTags((old) => toggleSetValue(old, tag))
-          }
+        <TableRow onClick={() =>
+          setExpandedTags((old) => toggleSetValue(old, tag))
+        }
         >
           <TableCell>
-            <button className="no-border align-center">
-              <span
-                className="strong"
-                style={{ marginRight: '.375rem' }}
-              >
+            <Button
+              icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />}
+              appearance="transparent"
+            >
+              <strong style={{ marginRight: '.375rem' }}>
                 {tag}
-              </span>
-
-              <ExpandIcon isExpanded={expandedTags.has(tag)} />
-            </button>
+              </strong>
+            </Button>
           </TableCell>
           {/* in lines with tag, no content to display but empty cells needed to match width */}
           <TableCell></TableCell>

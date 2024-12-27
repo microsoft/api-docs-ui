@@ -1,10 +1,15 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { fixupConfigRules, fixupPluginRules, includeIgnoreFile } from '@eslint/compat';
+import {
+  fixupConfigRules,
+  fixupPluginRules,
+  includeIgnoreFile,
+} from '@eslint/compat';
 import _import from 'eslint-plugin-import';
 import react from 'eslint-plugin-react';
 import jsxA11Y from 'eslint-plugin-jsx-a11y';
 import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin'
 import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +17,7 @@ const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
+  allConfig: js.configs.all,
 });
 
 export default [
@@ -20,6 +25,7 @@ export default [
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:storybook/recommended',
   )),
   includeIgnoreFile(path.resolve(__dirname, '.gitignore')),
   {
@@ -27,12 +33,41 @@ export default [
       'import': fixupPluginRules(_import),
       'react': fixupPluginRules(react),
       'jsx-a11y': jsxA11Y,
+      '@stylistic': stylistic,
     },
 
+    settings: { react: { version: 'detect' } },
+
     rules: {
+      'curly': ['error', 'all'],
+      'max-len': ['error', { code: 120 }],
+      'object-curly-newline': [
+        'error',
+        {
+          ObjectExpression: {
+            multiline: true,
+            minProperties: 3,
+          },
+          ObjectPattern: {
+            multiline: true,
+            minProperties: 3,
+          },
+          ImportDeclaration: {
+            multiline: true,
+            minProperties: 3,
+          },
+          ExportDeclaration: {
+            multiline: true,
+            minProperties: 3,
+          },
+        },
+      ],
+      'object-curly-spacing': ['error', 'always'],
       'quotes': ['error', 'single'],
       'quote-props': ['error', 'consistent-as-needed'],
       'indent': ['error', 2],
+      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
       'import/order': ['error', {
         pathGroups: [{
           pattern: '@/**',
@@ -55,9 +90,7 @@ export default [
 
       'react/jsx-no-bind': 'off',
 
-      'react/jsx-one-expression-per-line': ['error', {
-        allow: 'single-child',
-      }],
+      'react/jsx-one-expression-per-line': ['error', { allow: 'single-child' }],
 
       'react/jsx-pascal-case': 'error',
 
@@ -72,6 +105,11 @@ export default [
         requiredFirst: true,
         callbacksLast: true,
         noSortAlphabetically: true,
+      }],
+
+      'react/jsx-curly-brace-presence': ['error', {
+        props: 'never',
+        children: 'ignore',
       }],
 
       'react/jsx-uses-react': 'error',

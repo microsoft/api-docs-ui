@@ -4,3 +4,4 @@ node_modules/
 dist/
 *.iml
 npm-debug.log*
+*storybook.log
