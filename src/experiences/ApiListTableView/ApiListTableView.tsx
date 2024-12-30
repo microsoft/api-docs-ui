@@ -9,12 +9,14 @@ import {
   Button,
 } from '@fluentui/react-components';
 import ExpandIcon from '@/components/ExpandIcon';
-import { Api, ApiGroup } from '@/types/api';
+import { Api } from '@/types/api';
+import { TagGroup } from '@/types/common';
 import { toggleSetValue } from '@/utils/toggleSetValue';
+import { isTagGroupedList } from '@/utils/common';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export interface Props {
-  apis: Api[] | ApiGroup[];
+  apis: Api[] | Array<TagGroup<Api>>;
   showApiType?: boolean;
   apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
 }
@@ -28,7 +30,7 @@ export const ApiListTableView: React.FC<Props> = ({
 }) => {
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
 
-  const isApisGrouped = apis[0] && 'tag' in apis[0] && 'items' in apis[0];
+  const isGrouped = isTagGroupedList(apis);
 
   function renderApiRows(apis?: Api[]) {
     if (!apis.length) {
@@ -66,7 +68,7 @@ export const ApiListTableView: React.FC<Props> = ({
     ));
   }
 
-  function renderApisByTagRows(apisByTag: ApiGroup[]) {
+  function renderApisByTagRows(apisByTag: Array<TagGroup<Api>>) {
     return apisByTag.map(({ tag, items }) => (
       <React.Fragment key={tag}>
         <TableRow onClick={() =>
@@ -94,8 +96,8 @@ export const ApiListTableView: React.FC<Props> = ({
   }
 
   function renderBody() {
-    if (isApisGrouped) {
-      return renderApisByTagRows(apis as ApiGroup[]);
+    if (isGrouped) {
+      return renderApisByTagRows(apis as Array<TagGroup<Api>>);
     }
     return renderApiRows(apis as Api[]);
   }

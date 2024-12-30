@@ -25,6 +25,7 @@
     "@eslint/compat": "1.2.4",
     "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.17.0",
+    "@fluentui/react": "8.122.2",
     "@storybook/addon-essentials": "8.4.7",
     "@storybook/blocks": "8.4.7",
     "@storybook/react": "8.4.7",

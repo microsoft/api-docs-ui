@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const MarkdownRenderer: React.FC<Props> = ({
-  markdown, maxLength, shouldTruncate, 
+  markdown, maxLength, shouldTruncate,
 }) => {
   return (
     <ReactMarkdown

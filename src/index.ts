@@ -1,1 +1,1 @@
-export { default as ApiListTableView } from './experiences/api-list/ApiListTableView';
+export { default as ApiListTableView } from './experiences/ApiListTableView';

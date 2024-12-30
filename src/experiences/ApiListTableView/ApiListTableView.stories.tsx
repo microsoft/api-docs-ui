@@ -3,7 +3,7 @@ import { Api } from '@/types/api';
 import ApiListTableView from './ApiListTableView';
 
 const meta = {
-  title: 'Api List/ApiListTableView',
+  title: 'ApiListTableView',
   component: ApiListTableView,
   argTypes: {
     apis: {
@@ -104,3 +104,5 @@ export const GroupedByTag: Story = {
     })),
   },
 };
+
+export const Empty: Story = { args: { apis: [] } };

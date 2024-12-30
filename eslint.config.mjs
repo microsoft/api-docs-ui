@@ -44,11 +44,37 @@ export default [
         code: 120,
         ignoreStrings: true,
       }],
-      'object-curly-spacing': ['error', 'always'],
-      'quotes': ['error', 'single'],
-      'quote-props': ['error', 'consistent-as-needed'],
-      'indent': ['error', 2],
-      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/object-curly-spacing': ['error', 'always'],
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/quote-props': ['error', 'consistent-as-needed'],
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/comma-dangle': ['error', {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'ignore',
+      }],
+      '@stylistic/no-trailing-spaces': 'error',
+      '@stylistic/object-curly-newline': ['error', {
+        ObjectExpression: {
+          multiline: true,
+          consistent: true,
+        },
+        ObjectPattern: {
+          multiline: true,
+          consistent: true,
+        },
+        ImportDeclaration: {
+          multiline: true,
+          consistent: true,
+        },
+        ExportDeclaration: {
+          multiline: true,
+          consistent: true,
+        },
+      }],
+      '@stylistic/function-paren-newline': ['error', 'consistent'],
       '@stylistic/object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
       'import/order': ['error', {
         pathGroups: [{
@@ -60,7 +86,7 @@ export default [
       }],
 
       'react/hook-use-state': 'error',
-      'react/jsx-first-prop-new-line': ['error', 'multiprop'],
+      'react/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
       'react/jsx-indent': ['error', 2],
       'react/jsx-indent-props': ['error', 2],
       'react/jsx-closing-bracket-location': ['error', 'tag-aligned'],
