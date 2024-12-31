@@ -12,14 +12,17 @@ import {
 const preview: Preview = {
   tags: ['autodocs'],
   parameters: {
+    controls: {
+      sort: 'requiredFirst',
+    },
     docs: {
       page: () => (
         <>
           <Title />
           <Subtitle />
           <Description />
-          <Stories />
-          <Controls />
+          <Stories title="Examples" />
+          <Controls sort="requiredFirst" />
         </>
       ),
     },

@@ -23,7 +23,7 @@ export const ApiOperationsList: React.FC<Props> = ({
   defaultAllGroupTagsExpanded,
   onOperationSelect,
 }) => {
-  const isGrouped = isTagGroupedList(operations);
+  const isGrouped = isTagGroupedList<ApiOperation>(operations);
 
   function renderOperation(operation: ApiOperation): React.ReactNode {
     const isSelected = selectedOperationName === operation.name;
