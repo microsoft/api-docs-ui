@@ -5,34 +5,7 @@ import ApiListCardsView from './ApiListCardsView';
 const meta = {
   title: 'ApiListCardsView',
   component: ApiListCardsView,
-  argTypes: {
-    apis: {
-      description: 'A list of APIs or API groups to display.',
-    },
-    cardsPerRow: {
-      description: 'The number of cards to display in a row.',
-      control: 'number',
-      table: {
-        defaultValue: {
-          summary: '3',
-        },
-      },
-    },
-    showApiType: {
-      description: 'If true - show the API type column.',
-      control: 'boolean',
-      table: {
-        defaultValue: {
-          summary: 'false',
-        },
-      },
-    },
-    apiLinkPropsProvider: {
-      description: 'A function that accepts API object and returns props for the link to the API details page.',
-    },
-  },
   args: {
-    cardsPerRow: 3,
     showApiType: true,
     apiLinkPropsProvider: () => ({
       onClick(e) {

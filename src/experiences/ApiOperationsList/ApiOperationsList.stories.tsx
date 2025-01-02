@@ -6,46 +6,6 @@ import ApiOperationsList from './ApiOperationsList';
 const meta = {
   title: 'ApiOperationsList',
   component: ApiOperationsList,
-  argTypes: {
-    operations: {
-      description: 'A list of API operations or API operations groups to display.',
-    },
-    selectedOperationName: {
-      description: 'A name of currently selected operation.',
-      control: 'text',
-    },
-    labelField: {
-      description: 'An operation data field that should be used as a label.',
-      control: 'select',
-      options: ['urlTemplate', 'displayName'],
-      table: {
-        defaultValue: {
-          summary: 'displayName',
-        },
-      },
-    },
-    allowLabelWrap: {
-      description: 'If true - allow label to wrap to the next line. Otherwise - truncate the label.',
-      control: 'boolean',
-      table: {
-        defaultValue: {
-          summary: 'false',
-        },
-      },
-    },
-    defaultAllGroupTagsExpanded: {
-      description: 'If true - all group tags are expanded by default. Can be used only when operations are grouped.',
-      control: 'boolean',
-      table: {
-        defaultValue: {
-          summary: 'false',
-        },
-      },
-    },
-    onOperationSelect: {
-      description: 'A callback that is called when an operation is selected. An entire operation object is passed as an argument.',
-    },
-  },
   args: {
     allowLabelWrap: false,
     defaultAllGroupTagsExpanded: false,

@@ -16,6 +16,7 @@ const preview: Preview = {
       sort: 'requiredFirst',
     },
     docs: {
+      toc: true,
       page: () => (
         <>
           <Title />

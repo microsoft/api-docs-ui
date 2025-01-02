@@ -16,8 +16,11 @@ import { isTagGroupedList } from '@/utils/common';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 
 export interface Props {
+  /** A list of APIs or API groups to display. */
   apis: Api[] | Array<TagGroup<Api>>;
+  /** If true - show the API type column. */
   showApiType?: boolean;
+  /** A function that accepts API object and returns props for the link to the API details page. */
   apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
 }
 

@@ -10,9 +10,13 @@ import ExpandIcon from '@/components/ExpandIcon';
 import styles from './ApiListCardsView.module.scss';
 
 export interface Props {
+  /** A list of APIs or API groups to display. */
   apis: Api[] | Array<TagGroup<Api>>;
+  /** The number of cards to display in a row. */
   cardsPerRow?: number;
+  /** If true - show the API type column.*/
   showApiType?: boolean;
+  /** A function that accepts API object and returns props for the link to the API details page. */
   apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
 }
 

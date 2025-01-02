@@ -7,11 +7,17 @@ import { ApiOperation } from '@/types/apiOperation';
 import { isTagGroupedList } from '@/utils/common';
 
 export interface Props {
+  /** A list of API operations or API operations groups to display. */
   operations: ApiOperation[] | Array<TagGroup<ApiOperation>>;
+  /** A name of currently selected operation. */
   selectedOperationName?: string;
+  /** An operation data field that should be used as a label. */
   labelField?: 'urlTemplate' | 'displayName';
+  /** If true - allow label to wrap to the next line. Otherwise - truncate the label. */
   allowLabelWrap?: boolean;
+  /** If true - all group tags are expanded by default. Can be used only when operations are grouped. */
   defaultAllGroupTagsExpanded?: boolean;
+  /** A callback that is called when an operation is selected. An entire operation object is passed as an argument. */
   onOperationSelect: (operation: ApiOperation) => void;
 }
 
