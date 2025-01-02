@@ -15,7 +15,7 @@ const meta = {
   },
   parameters: {
     docs: {
-      subtitle: 'A table representation of the API list. It can render either a flat list of APIs or APIs grouped by tag.',
+      subtitle: 'Operation list with an ability to select a specific operation (must be handled by parent). Supports flat and grouped lists.',
     },
   },
 } satisfies Meta<typeof ApiOperationsList>;

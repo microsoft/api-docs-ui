@@ -1,0 +1,20 @@
+.apiOperationMethod {
+  width: 75px;
+  color: #696969;
+
+  &.get {
+    color: #107C10;
+  }
+
+  &.post {
+    color: #0F6CBD;
+  }
+
+  &.delete {
+    color: #C50F1F;
+  }
+
+  &.put {
+    color: #8e562e;
+  }
+}

@@ -1,0 +1,48 @@
+.apiOperationInfo {
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+
+  .general {
+    padding: .5rem 1rem;
+    background-color: #F5F5F5;
+
+    h5 {
+      margin: 0 0 0.5rem;
+      font-size: 18px;
+      font-weight: normal;
+      line-height: 1.2;
+    }
+
+    .description {
+      margin-top: 1rem;
+    }
+
+    .tags {
+      margin-top: 1rem;
+
+      .tag {
+        margin-left: .5rem;
+      }
+    }
+  }
+
+  .requestUrlRow {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+
+    .method {
+      flex: 0;
+      margin-right: .5rem;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 600;
+    }
+
+    .requestUrl {
+      flex: 1;
+    }
+  }
+}

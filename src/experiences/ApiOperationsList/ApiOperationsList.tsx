@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { TagGroup } from '@/types/common';
 import { ApiOperation } from '@/types/apiOperation';
 import { isTagGroupedList } from '@/utils/common';
+import ApiOperationMethod from '@/components/ApiOperationMethod';
 import styles from './ApiOperationsList.module.scss';
 
 export interface Props {
@@ -46,14 +47,7 @@ export const ApiOperationsList: React.FC<Props> = ({
         horizontal
         onClick={() => onOperationSelect(operation)}
       >
-        <span
-          className={classNames(
-            styles.method,
-            styles[operation.method.toLowerCase()],
-          )}
-        >
-          {operation.method}
-        </span>
+        <ApiOperationMethod method={operation.method} />
 
         <span
           className={styles.name}
