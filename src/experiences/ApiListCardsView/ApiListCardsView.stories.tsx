@@ -9,6 +9,15 @@ const meta = {
     apis: {
       description: 'A list of APIs or API groups to display.',
     },
+    cardsPerRow: {
+      description: 'The number of cards to display in a row.',
+      control: 'number',
+      table: {
+        defaultValue: {
+          summary: '3',
+        },
+      },
+    },
     showApiType: {
       description: 'If true - show the API type column.',
       control: 'boolean',
@@ -23,6 +32,7 @@ const meta = {
     },
   },
   args: {
+    cardsPerRow: 3,
     showApiType: true,
     apiLinkPropsProvider: () => ({
       onClick(e) {

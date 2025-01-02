@@ -7,8 +7,8 @@ export default defineConfig({
     lib: {
       entry: './src/index.ts',
       name: '@microsoft/api-docs-ui',
-      formats: ['es', 'cjs'],
-      fileName: (format) => `index.${format}.js`,
+      formats: ['cjs'],
+      fileName: 'index',
     },
     rollupOptions: {
       external: ['react', 'react-dom'],

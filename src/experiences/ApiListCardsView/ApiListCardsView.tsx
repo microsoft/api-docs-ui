@@ -11,13 +11,19 @@ import styles from './ApiListCardsView.module.scss';
 
 export interface Props {
   apis: Api[] | Array<TagGroup<Api>>;
+  cardsPerRow?: number;
   showApiType?: boolean;
   apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
 }
 
 const MD_MAX_LENGTH = 250;
 
-export const ApiListCardsView: React.FC<Props> = ({ apis, showApiType, apiLinkPropsProvider }) => {
+export const ApiListCardsView: React.FC<Props> = ({
+  apis,
+  cardsPerRow = 3,
+  showApiType,
+  apiLinkPropsProvider,
+}) => {
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
   const isGrouped = isTagGroupedList<Api>(apis);
 
@@ -27,7 +33,12 @@ export const ApiListCardsView: React.FC<Props> = ({ apis, showApiType, apiLinkPr
     }
 
     return (
-      <div className={styles.apiCards}>
+      <div
+        className={styles.apiCards}
+        style={{
+          gridTemplateColumns: `repeat(${cardsPerRow}, 1fr)`,
+        }}
+      >
         {apis.map((api) => (
           <div key={api.name} className={styles.card}>
             <div style={{ height: '100%' }}>
