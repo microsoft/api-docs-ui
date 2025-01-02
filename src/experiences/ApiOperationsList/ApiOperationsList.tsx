@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { TagGroup } from '@/types/common';
 import { ApiOperation } from '@/types/apiOperation';
 import { isTagGroupedList } from '@/utils/common';
+import styles from './ApiOperationsList.module.scss';
 
 export interface Props {
   /** A list of API operations or API operations groups to display. */
@@ -37,26 +38,25 @@ export const ApiOperationsList: React.FC<Props> = ({
     return (
       <Stack
         key={operation.name}
-        className={`operation ${isSelected && 'is-selected-operation'}`}
+        className={classNames(
+          styles.operation,
+          isSelected && styles.isSelected,
+          !allowLabelWrap && styles.nowrap,
+        )}
         horizontal
         onClick={() => onOperationSelect(operation)}
       >
         <span
           className={classNames(
-            'operation-method',
-            `method-${operation.method}`,
-            isSelected && 'strong',
+            styles.method,
+            styles[operation.method.toLowerCase()],
           )}
         >
           {operation.method}
         </span>
 
         <span
-          className={classNames(
-            'operation-name',
-            !allowLabelWrap && 'nowrap',
-            isSelected && 'strong'
-          )}
+          className={styles.name}
         >
           {operation[labelField]}
         </span>

@@ -7,6 +7,8 @@ const meta = {
   title: 'ApiOperationsList',
   component: ApiOperationsList,
   args: {
+    selectedOperationName: 'createUser',
+    labelField: 'displayName',
     allowLabelWrap: false,
     defaultAllGroupTagsExpanded: false,
     onOperationSelect: fn(),
