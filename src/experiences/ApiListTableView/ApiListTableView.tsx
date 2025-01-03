@@ -14,6 +14,7 @@ import { TagGroup } from '@/types/common';
 import { toggleSetValue } from '@/utils/toggleSetValue';
 import { isTagGroupedList } from '@/utils/common';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import styles from './ApiListTableView.module.scss';
 
 export interface Props {
   /** A list of APIs or API groups to display. */
@@ -34,14 +35,15 @@ export const ApiListTableView: React.FC<Props> = ({
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
 
   const isGrouped = isTagGroupedList<Api>(apis);
+  const fullWidthColSpan = 2 + Number(!!showApiType);
 
   function renderApiRows(apis?: Api[]) {
     if (!apis.length) {
       return (
         <TableRow>
           <TableCell
-            colSpan={showApiType ? 3 : 2}
-            style={{ textAlign: 'center' }}
+            className={styles.noRecordsCell}
+            colSpan={fullWidthColSpan}
           >
             No APIs to display
           </TableCell>
@@ -57,10 +59,9 @@ export const ApiListTableView: React.FC<Props> = ({
             {...apiLinkPropsProvider(api)}
           >
             {api.displayName}
-            {/* {!!api.apiVersion && " - " + api.apiVersion} */}
           </a>
         </TableCell>
-        <TableCell style={{ padding: '.5rem 0' }}>
+        <TableCell>
           <MarkdownRenderer
             markdown={api.description}
             maxLength={MD_MAX_LENGTH}
@@ -78,19 +79,14 @@ export const ApiListTableView: React.FC<Props> = ({
           setExpandedTags((old) => toggleSetValue(old, tag))
         }
         >
-          <TableCell>
+          <TableCell colSpan={fullWidthColSpan}>
             <Button
               icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />}
               appearance="transparent"
             >
-              <strong style={{ marginRight: '.375rem' }}>
-                {tag}
-              </strong>
+              {tag}
             </Button>
           </TableCell>
-          {/* in lines with tag, no content to display but empty cells needed to match width */}
-          <TableCell></TableCell>
-          {showApiType && <TableCell></TableCell>}
         </TableRow>
 
         {expandedTags.has(tag) && renderApiRows(items)}
@@ -106,23 +102,19 @@ export const ApiListTableView: React.FC<Props> = ({
   }
 
   return (
-    <Table
-      className="fui-table"
-      size="small"
-      aria-label="APIs List table"
-    >
+    <Table className={styles.apiListTableView} size="small">
       <TableHeader>
-        <TableRow className="fui-table-headerRow">
+        <TableRow>
           <TableHeaderCell>
-            <span className="strong">Name</span>
+            <strong>Name</strong>
           </TableHeaderCell>
           <TableHeaderCell>
-            <span className="strong">Description</span>
+            <strong>Description</strong>
           </TableHeaderCell>
 
           {showApiType && (
-            <TableHeaderCell style={{ width: '8em' }}>
-              <span className="strong">Type</span>
+            <TableHeaderCell className={styles.typeCol}>
+              <strong>Type</strong>
             </TableHeaderCell>
           )}
         </TableRow>

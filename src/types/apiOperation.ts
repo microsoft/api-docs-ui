@@ -5,3 +5,13 @@ export interface ApiOperation {
   urlTemplate: string;
   displayName: string;
 }
+
+export interface ApiOperationParameter {
+  name: string;
+  /** Parameter placement, e.g. "query", "template", "header", "body". */
+  in: string;
+  required?: boolean;
+  type: string;
+  description?: string;
+  examples?: any; // TODO
+}
