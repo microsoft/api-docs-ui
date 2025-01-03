@@ -54,9 +54,11 @@ export const ApiOperationInfo: React.FC<Props> = ({ operation, requestUrl, tags 
       </div>
 
       <div className={styles.requestUrlRow}>
-        <ApiOperationMethod className={styles.method} method={operation.method} />
+        <span className={styles.requestUrl}>
+          <ApiOperationMethod className={styles.method} method={operation.method} />
 
-        <span className={styles.requestUrl}>{requestUrl}</span>
+          {requestUrl}
+        </span>
 
         <Tooltip
           content={isCopied ? 'Copied to clipboard!' : 'Copy to clipboard'}
