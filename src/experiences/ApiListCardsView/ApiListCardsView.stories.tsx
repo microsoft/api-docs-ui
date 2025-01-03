@@ -62,7 +62,7 @@ const apis = [
     name: 'stock-market',
     displayName: 'Stock Market Data API',
     description: 'Fetches stock market data, including prices and trends.',
-    type: 'rest',
+    type: undefined,
     tag: 'finance',
   },
 ];

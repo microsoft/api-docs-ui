@@ -6,5 +6,5 @@ export interface Api {
   /** Description of API. */
   description: string;
   /** Determines type of API, e.g. "soap". */
-  type: string;
+  type?: string;
 }

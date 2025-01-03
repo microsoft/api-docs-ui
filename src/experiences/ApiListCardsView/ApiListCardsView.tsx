@@ -49,7 +49,7 @@ export const ApiListCardsView: React.FC<Props> = ({
               {showApiType && (
                 <div className={styles.tags}>
                   <span>API</span>
-                  <span>{api.type}</span>
+                  {!!api.type && <span>{api.type}</span>}
                 </div>
               )}
               <h4>{api.displayName}</h4>
