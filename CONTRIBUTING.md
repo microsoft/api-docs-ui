@@ -67,6 +67,11 @@ If you want to test your component locally in another project, chances are you w
 because of how node modules are resolved with this method. To work around this you can use `yalc` to simulate actual
 publishing of the package and then install it in your project.
 
+Make sure you have the most recent code built before publishing:
+```bash
+npm run build
+```
+
 To publish run in current project:
 ```bash
 yalc publish
