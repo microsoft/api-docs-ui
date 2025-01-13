@@ -10,8 +10,9 @@ export interface ApiOperationParameter {
   name: string;
   /** Parameter placement, e.g. "query", "template", "header", "body". */
   in: string;
-  required?: boolean;
   type: string;
   description?: string;
+  required?: boolean;
+  readOnly?: boolean;
   examples?: any; // TODO
 }
