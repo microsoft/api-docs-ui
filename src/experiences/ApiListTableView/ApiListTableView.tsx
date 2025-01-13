@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -22,7 +23,7 @@ export interface Props {
   /** If true - show the API type column. */
   showApiType?: boolean;
   /** A function that accepts API object and returns props for the link to the API details page. */
-  apiLinkPropsProvider: (api: Api) => React.HTMLProps<HTMLAnchorElement>;
+  apiLinkPropsProvider: (api: Api) => React.ComponentProps<typeof Link>;
 }
 
 const MD_MAX_LENGTH = 120;
@@ -54,12 +55,12 @@ export const ApiListTableView: React.FC<Props> = ({
     return apis.map((api) => (
       <TableRow key={api.name}>
         <TableCell>
-          <a
+          <Link
             title={api.displayName}
             {...apiLinkPropsProvider(api)}
           >
             {api.displayName}
-          </a>
+          </Link>
         </TableCell>
         <TableCell>
           <MarkdownRenderer
