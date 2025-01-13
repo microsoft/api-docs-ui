@@ -36,6 +36,11 @@ const columnConfigByKey = {
     title: 'Required',
     renderer: (required?: boolean) => badgeRenderer(String(Boolean(!!required))),
   },
+  readOnly: {
+    key: 'readOnly',
+    title: 'Read-only',
+    renderer: (readOnly?: boolean) => badgeRenderer(String(Boolean(!!readOnly))),
+  },
   type: {
     key: 'type',
     title: 'Type',
@@ -47,8 +52,9 @@ const columnConfigByKey = {
   },
 };
 
-const columnOrder: Array<keyof ApiOperationParameter> = ['name', 'in', 'required', 'type', 'description'];
+const columnOrder: Array<keyof ApiOperationParameter> = ['name', 'in', 'required', 'readOnly', 'type', 'description'];
 
+// TODO: advanced type definition renderer
 export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) => {
   const columns = useMemo(() => (
     columnOrder
