@@ -12,11 +12,7 @@ export interface Props {
 
 function badgeRenderer(value: string) {
   return (
-    <Badge
-      appearance="tint"
-      color="informative"
-      shape="rounded"
-    >
+    <Badge appearance="tint" color="informative" shape="rounded">
       {value}
     </Badge>
   );
@@ -56,11 +52,10 @@ const columnOrder: Array<keyof ApiOperationParameter> = ['name', 'in', 'required
 
 // TODO: advanced type definition renderer
 export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) => {
-  const columns = useMemo(() => (
-    columnOrder
-      .filter((name) => !hiddenColumns?.includes(name))
-      .map((name) => columnConfigByKey[name])
-  ), [hiddenColumns]);
+  const columns = useMemo(
+    () => columnOrder.filter((name) => !hiddenColumns?.includes(name)).map((name) => columnConfigByKey[name]),
+    [hiddenColumns]
+  );
 
   return <InfoTable dataItems={parameters} columns={columns} />;
 };

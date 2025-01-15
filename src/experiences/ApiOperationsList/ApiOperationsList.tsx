@@ -39,21 +39,13 @@ export const ApiOperationsList: React.FC<Props> = ({
     return (
       <Stack
         key={operation.name}
-        className={classNames(
-          styles.operation,
-          isSelected && styles.isSelected,
-          !allowLabelWrap && styles.nowrap,
-        )}
+        className={classNames(styles.operation, isSelected && styles.isSelected, !allowLabelWrap && styles.nowrap)}
         horizontal
         onClick={() => onOperationSelect(operation)}
       >
         <ApiOperationMethod method={operation.method} />
 
-        <span
-          className={styles.name}
-        >
-          {operation[labelField]}
-        </span>
+        <span className={styles.name}>{operation[labelField]}</span>
       </Stack>
     );
   }
@@ -85,11 +77,7 @@ export const ApiOperationsList: React.FC<Props> = ({
     return operations.map((op) => renderOperation(op));
   }
 
-  return (
-    <>
-      {renderContent()}
-    </>
-  );
+  return <>{renderContent()}</>;
 };
 
 export default React.memo(ApiOperationsList);

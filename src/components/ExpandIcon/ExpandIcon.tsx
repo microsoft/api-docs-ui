@@ -9,7 +9,7 @@ export const ExpandIcon: React.FC<Props> = ({ isExpanded }) => {
   if (isExpanded) {
     return <ChevronUp16Regular />;
   }
-  return <ChevronDown16Regular />
+  return <ChevronDown16Regular />;
 };
 
 export default React.memo(ExpandIcon);

@@ -28,11 +28,7 @@ export interface Props {
 
 const MD_MAX_LENGTH = 120;
 
-export const ApiListTableView: React.FC<Props> = ({
-  apis,
-  showApiType,
-  apiLinkPropsProvider,
-}) => {
+export const ApiListTableView: React.FC<Props> = ({ apis, showApiType, apiLinkPropsProvider }) => {
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
 
   const isGrouped = isTagGroupedList<Api>(apis);
@@ -42,10 +38,7 @@ export const ApiListTableView: React.FC<Props> = ({
     if (!apis.length) {
       return (
         <TableRow>
-          <TableCell
-            className={styles.noRecordsCell}
-            colSpan={fullWidthColSpan}
-          >
+          <TableCell className={styles.noRecordsCell} colSpan={fullWidthColSpan}>
             No APIs to display
           </TableCell>
         </TableRow>
@@ -55,18 +48,12 @@ export const ApiListTableView: React.FC<Props> = ({
     return apis.map((api) => (
       <TableRow key={api.name}>
         <TableCell>
-          <Link
-            title={api.displayName}
-            {...apiLinkPropsProvider(api)}
-          >
+          <Link title={api.displayName} {...apiLinkPropsProvider(api)}>
             {api.displayName}
           </Link>
         </TableCell>
         <TableCell>
-          <MarkdownRenderer
-            markdown={api.description}
-            maxLength={MD_MAX_LENGTH}
-          />
+          <MarkdownRenderer markdown={api.description} maxLength={MD_MAX_LENGTH} />
         </TableCell>
         {showApiType && <TableCell>{api.type}</TableCell>}
       </TableRow>
@@ -76,15 +63,9 @@ export const ApiListTableView: React.FC<Props> = ({
   function renderApisByTagRows(apisByTag: Array<TagGroup<Api>>) {
     return apisByTag.map(({ tag, items }) => (
       <React.Fragment key={tag}>
-        <TableRow onClick={() =>
-          setExpandedTags((old) => toggleSetValue(old, tag))
-        }
-        >
+        <TableRow onClick={() => setExpandedTags((old) => toggleSetValue(old, tag))}>
           <TableCell colSpan={fullWidthColSpan}>
-            <Button
-              icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />}
-              appearance="transparent"
-            >
+            <Button icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />} appearance="transparent">
               {tag}
             </Button>
           </TableCell>
@@ -92,7 +73,7 @@ export const ApiListTableView: React.FC<Props> = ({
 
         {expandedTags.has(tag) && renderApiRows(items)}
       </React.Fragment>
-    ))
+    ));
   }
 
   function renderBody() {
@@ -121,9 +102,7 @@ export const ApiListTableView: React.FC<Props> = ({
         </TableRow>
       </TableHeader>
 
-      <TableBody>
-        {renderBody()}
-      </TableBody>
+      <TableBody>{renderBody()}</TableBody>
     </Table>
   );
 };

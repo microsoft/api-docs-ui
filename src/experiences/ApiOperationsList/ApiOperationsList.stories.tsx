@@ -15,7 +15,8 @@ const meta = {
   },
   parameters: {
     docs: {
-      subtitle: 'Operation list with an ability to select a specific operation (must be handled by parent). Supports flat and grouped lists.',
+      subtitle:
+        'Operation list with an ability to select a specific operation (must be handled by parent). Supports flat and grouped lists.',
     },
   },
 } satisfies Meta<typeof ApiOperationsList>;

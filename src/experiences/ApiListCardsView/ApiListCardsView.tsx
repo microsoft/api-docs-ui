@@ -22,12 +22,7 @@ export interface Props {
 
 const MD_MAX_LENGTH = 250;
 
-export const ApiListCardsView: React.FC<Props> = ({
-  apis,
-  cardsPerRow = 3,
-  showApiType,
-  apiLinkPropsProvider,
-}) => {
+export const ApiListCardsView: React.FC<Props> = ({ apis, cardsPerRow = 3, showApiType, apiLinkPropsProvider }) => {
   const [expandedTags, setExpandedTags] = useState(new Set<string>());
   const isGrouped = isTagGroupedList<Api>(apis);
 
@@ -58,10 +53,7 @@ export const ApiListCardsView: React.FC<Props> = ({
             </div>
 
             <Stack horizontal>
-              <a
-                title={api.displayName}
-                {...apiLinkPropsProvider(api)}
-              >
+              <a title={api.displayName} {...apiLinkPropsProvider(api)}>
                 <Button>Go to API</Button>
               </a>
             </Stack>
@@ -82,7 +74,7 @@ export const ApiListCardsView: React.FC<Props> = ({
           <Button
             className={styles.expandBtn}
             icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />}
-            onClick={() => setExpandedTags(old => toggleSetValue(old, tag))}
+            onClick={() => setExpandedTags((old) => toggleSetValue(old, tag))}
           >
             <span className="strong" style={{ marginLeft: '.5rem' }}>
               {tag}

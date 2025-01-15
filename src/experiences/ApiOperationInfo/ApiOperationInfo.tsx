@@ -39,13 +39,8 @@ export const ApiOperationInfo: React.FC<Props> = ({ operation, requestUrl, tags 
           <Stack className={styles.tags} horizontal>
             <strong>Tags:</strong>
 
-            {tags.map(tag => (
-              <Badge
-                key={tag}
-                className={styles.tag}
-                color="important"
-                appearance="outline"
-              >
+            {tags.map((tag) => (
+              <Badge key={tag} className={styles.tag} color="important" appearance="outline">
                 {tag}
               </Badge>
             ))}
@@ -65,11 +60,7 @@ export const ApiOperationInfo: React.FC<Props> = ({ operation, requestUrl, tags 
           relationship="description"
           hideDelay={isCopied ? 3000 : 250}
         >
-          <Button
-            icon={<Copy16Regular />}
-            appearance="transparent"
-            onClick={handleCopyClick}
-          />
+          <Button icon={<Copy16Regular />} appearance="transparent" onClick={handleCopyClick} />
         </Tooltip>
       </div>
     </div>

@@ -9,9 +9,7 @@ interface Props {
 
 export const ApiOperationMethod: React.FC<Props> = ({ className, method }) => {
   return (
-    <span className={classNames(styles.apiOperationMethod, styles[method.toLowerCase()], className)}>
-      {method}
-    </span>
+    <span className={classNames(styles.apiOperationMethod, styles[method.toLowerCase()], className)}>{method}</span>
   );
 };
 

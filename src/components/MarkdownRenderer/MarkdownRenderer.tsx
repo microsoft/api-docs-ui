@@ -12,16 +12,20 @@ interface Props {
   shouldTruncate?: boolean;
 }
 
-export const MarkdownRenderer: React.FC<Props> = ({
-  markdown, maxLength, shouldTruncate,
-}) => {
+export const MarkdownRenderer: React.FC<Props> = ({ markdown, maxLength, shouldTruncate }) => {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw, [rehypeTruncate, {
-        maxChars: maxLength,
-        disable: typeof maxLength === 'undefined',
-      }]]}
+      rehypePlugins={[
+        rehypeRaw,
+        [
+          rehypeTruncate,
+          {
+            maxChars: maxLength,
+            disable: typeof maxLength === 'undefined',
+          },
+        ],
+      ]}
       className={classNames(shouldTruncate && 'markdown-truncate')}
     >
       {markdown}
