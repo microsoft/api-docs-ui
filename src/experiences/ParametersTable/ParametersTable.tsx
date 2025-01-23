@@ -57,7 +57,7 @@ export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) 
     [hiddenColumns]
   );
 
-  return <InfoTable dataItems={parameters} columns={columns} />;
+  return <InfoTable dataItems={parameters} columns={columns} noDataMessage="No parameters" />;
 };
 
 export default React.memo(ParametersTable);

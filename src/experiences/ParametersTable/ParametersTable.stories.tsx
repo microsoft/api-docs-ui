@@ -59,3 +59,5 @@ export const WithHiddenColumns: Story = {
     hiddenColumns: ['in', 'type'],
   },
 };
+
+export const Empty: Story = { args: { parameters: [] } };

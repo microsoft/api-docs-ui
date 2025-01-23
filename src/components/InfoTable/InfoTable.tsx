@@ -8,9 +8,10 @@ interface Props<T = object> {
     title: string;
     renderer?: (value: unknown) => React.ReactNode;
   }>;
+  noDataMessage?: string;
 }
 
-export const InfoTable: React.FC<Props> = ({ dataItems, columns }) => {
+export const InfoTable: React.FC<Props> = ({ dataItems, columns, noDataMessage = 'No items' }) => {
   return (
     <Table className="fui-table">
       <TableHeader>
@@ -23,6 +24,14 @@ export const InfoTable: React.FC<Props> = ({ dataItems, columns }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
+        {!dataItems.length && (
+          <TableRow className="fui-table-body-row">
+            <TableCell colSpan={columns.length} style={{ textAlign: 'center' }}>
+              {noDataMessage}
+            </TableCell>
+          </TableRow>
+        )}
+
         {dataItems.map((rowItem, index) => (
           <TableRow key={index} className="fui-table-body-row">
             {columns.map((column) => (
