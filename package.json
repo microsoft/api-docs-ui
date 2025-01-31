@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "build": "vite build --emptyOutDir",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o storybook-static"
+    "build-storybook": "storybook build -o storybook-static",
+    "release": "npm run build && sh ./scripts/release.sh"
   },
   "dependencies": {
     "@fluentui/react-components": "9.56.8",
