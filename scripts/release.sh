@@ -42,11 +42,8 @@ git push origin $BRANCH_NAME || exit 1
 # Create a pull request (ensure 'gh' CLI is installed and authenticated)
 PR_URL=$(gh pr create --base main --head $BRANCH_NAME --title "Bump version" --body "Automated version bump") || exit 1
 
-# Automatically merge the PR (ensure it's mergeable)
-gh pr merge $PR_URL --merge --auto --delete-branch || exit 1
-
-# Open the created pull request in the browser
-gh pr view $PR_URL --web || exit 1
+# Automatically merge the PR
+gh pr merge $PR_URL --merge --auto "1" --delete-branch || gh pr view $PR_URL --web || exit 1
 
 git push --tags
 
