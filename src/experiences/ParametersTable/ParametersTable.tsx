@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Badge } from '@fluentui/react-components';
 import InfoTable from '@/components/InfoTable';
 import { ApiOperationParameter } from '@/types/apiOperation';
+import styles from './ParametersTable.module.scss';
 
 export interface Props {
   /** List of API request parameters */
@@ -12,7 +13,7 @@ export interface Props {
 
 function badgeRenderer(value: string) {
   return (
-    <Badge appearance="tint" color="informative" shape="rounded">
+    <Badge className={styles.badge} appearance="tint" color="informative" shape="rounded">
       {value}
     </Badge>
   );

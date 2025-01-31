@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface ApiOperation {
   name: string;
   description?: string;
@@ -10,7 +12,7 @@ export interface ApiOperationParameter {
   name: string;
   /** Parameter placement, e.g. "query", "template", "header", "body". */
   in: string;
-  type: string;
+  type: React.ReactNode;
   description?: string;
   required?: boolean;
   readOnly?: boolean;
