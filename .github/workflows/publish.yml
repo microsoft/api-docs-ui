@@ -1,48 +1,14 @@
 name: Publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      version_bump:
-        description: "Change type"
-        required: true
-        type: 'choice'
-        default: 'patch'
-        options:
-            - major
-            - minor
-            - patch
+  push:
+    tags:
+      - '*'
 
 jobs:
-  version-bump:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Bump version
-        run: |
-          npm version ${{ github.event.inputs.version_bump }}
-          echo "New version: $(node -p "require('./package.json').version")"
-
-      - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_PAT }}
-        run: |
-          git config user.name "github-actions-bot"
-          git config user.email "github-actions-bot@users.noreply.github.com"
-          git add package.json package-lock.json
-          git commit -m "Bump version to $(node -p "require('./package.json').version")"
-          git push origin ${{ github.ref_name }}
-
   publish:
     runs-on: ubuntu-latest
+    if: startsWith(github.event.head_commit.message, 'Merge pull request') && contains(github.event.head_commit.message, 'chore/bump-version')
 
     steps:
       - name: Checkout code
@@ -53,6 +19,7 @@ jobs:
         with:
           node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
+          scope: '@microsoft'
 
       - name: Install dependencies
         run: npm install
@@ -62,5 +29,5 @@ jobs:
 
       - name: Publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_PAT }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm publish
