@@ -81,3 +81,17 @@ To install in your target project run:
 ```bash
 yalc add @microsoft/api-docs-ui
 ```
+
+## Publishing
+
+Currently, we are publishing to GitHub packages registry.
+
+Make sure you have gh cli installed.
+
+To initiate the publish process run:
+```bash
+npm run release
+```
+
+It will create a new branch, bump the version, build the project, create a pull request and merge it, and create a new tag and push it.
+After new tag is pushed, the package will be published to GitHub packages registry with a Publish GitHub action.
