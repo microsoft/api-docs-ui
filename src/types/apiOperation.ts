@@ -3,7 +3,7 @@ import React from 'react';
 export interface ApiOperation {
   name: string;
   description?: string;
-  method: string;
+  method?: string;
   urlTemplate: string;
   displayName: string;
 }

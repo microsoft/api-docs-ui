@@ -43,7 +43,7 @@ export const ApiOperationsList: React.FC<Props> = ({
         horizontal
         onClick={() => onOperationSelect(operation)}
       >
-        <ApiOperationMethod method={operation.method} />
+        {!!operation.method && <ApiOperationMethod method={operation.method} />}
 
         <span className={styles.name}>{operation[labelField]}</span>
       </Stack>

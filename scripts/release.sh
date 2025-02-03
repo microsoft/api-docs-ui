@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Ensure the script returns to the 'main' branch on exit (success or failure)
+# Ensure the script returns to the 'main' branch on exit
 trap 'git checkout main || exit 1' EXIT
 
-# Check if the user is logged into GitHub CLI, if not, log in
+# Check if the user is logged into GitHub CLI, if not, initiate log in flow
 gh auth status &>/dev/null
 if [ $? -ne 0 ]; then
   echo "GitHub CLI is not authenticated. Logging in..."
@@ -18,7 +18,7 @@ if [[ "$CURRENT_BRANCH" != "main" ]]; then
 fi
 
 # Check for version bump type argument, default to 'patch' if not provided
-VERSION_TYPE=${1:-patch}  # Default to 'patch' if no argument is provided
+VERSION_TYPE=${1:-patch}
 
 # Validate the version bump type (must be one of patch, minor, or major)
 if [[ "$VERSION_TYPE" != "patch" && "$VERSION_TYPE" != "minor" && "$VERSION_TYPE" != "major" ]]; then
