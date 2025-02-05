@@ -50,7 +50,7 @@ export const ApiOperationInfo: React.FC<Props> = ({ operation, requestUrl, tags 
 
       <div className={styles.requestUrlRow}>
         <span className={styles.requestUrl}>
-          <ApiOperationMethod className={styles.method} method={operation.method} />
+          {operation.method && <ApiOperationMethod className={styles.method} method={operation.method} />}
 
           {requestUrl}
         </span>
