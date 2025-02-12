@@ -1,6 +1,6 @@
-export * from './types/api';
-export * from './types/apiOperation';
-export * from './types/common';
+export type * from './types/api';
+export type * from './types/apiOperation';
+export type * from './types/common';
 
 export { default as ApiOperationMethod } from './components/ApiOperationMethod';
 export { default as ApiListCardsView } from './experiences/ApiListCardsView';
