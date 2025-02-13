@@ -25,45 +25,48 @@ export const ApiOperationInfo: React.FC<Props> = ({ operation, requestUrl, tags 
   }, [requestUrl]);
 
   return (
-    <div className={styles.apiOperationInfo}>
-      <div className={styles.general}>
-        <h5>{operation.displayName}</h5>
+    <>
+      <h2>{operation.displayName}</h2>
 
-        {operation.description && (
+      {operation.description && (
           <div className={styles.description}>
             <MarkdownRenderer markdown={operation.description} />
           </div>
-        )}
+      )}
+      <div className={styles.apiOperationInfo}>
+        
+        <div className={styles.general}>
+          <strong>Endpoint</strong>
+          {!!tags?.length && (
+            <Stack className={styles.tags} horizontal>
+              Tags:
 
-        {!!tags?.length && (
-          <Stack className={styles.tags} horizontal>
-            <strong>Tags:</strong>
+              {tags.map((tag) => (
+                <Badge key={tag} className={styles.tag} color="important" appearance="outline">
+                  {tag}
+                </Badge>
+              ))}
+            </Stack>
+          )}
+        </div>
 
-            {tags.map((tag) => (
-              <Badge key={tag} className={styles.tag} color="important" appearance="outline">
-                {tag}
-              </Badge>
-            ))}
-          </Stack>
-        )}
+        <div className={styles.requestUrlRow}>
+          <span className={styles.requestUrl}>
+            {operation.method && <ApiOperationMethod className={styles.method} method={operation.method} />}
+
+            {requestUrl}
+          </span>
+
+          <Tooltip
+            content={isCopied ? 'Copied to clipboard!' : 'Copy to clipboard'}
+            relationship="description"
+            hideDelay={isCopied ? 3000 : 250}
+          >
+            <Button icon={<Copy16Regular />} appearance="transparent" onClick={handleCopyClick} />
+          </Tooltip>
+        </div>
       </div>
-
-      <div className={styles.requestUrlRow}>
-        <span className={styles.requestUrl}>
-          {operation.method && <ApiOperationMethod className={styles.method} method={operation.method} />}
-
-          {requestUrl}
-        </span>
-
-        <Tooltip
-          content={isCopied ? 'Copied to clipboard!' : 'Copy to clipboard'}
-          relationship="description"
-          hideDelay={isCopied ? 3000 : 250}
-        >
-          <Button icon={<Copy16Regular />} appearance="transparent" onClick={handleCopyClick} />
-        </Tooltip>
-      </div>
-    </div>
+    </>
   );
 };
 
