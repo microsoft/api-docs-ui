@@ -2,10 +2,10 @@ import React from 'react';
 import { Stack } from '@fluentui/react';
 import { Accordion, AccordionHeader, AccordionItem, AccordionPanel } from '@fluentui/react-components';
 import classNames from 'classnames';
+import ApiOperationMethod from 'experiences/ApiOperationMethod';
 import { TagGroup } from '@/types/common';
 import { ApiOperation } from '@/types/apiOperation';
 import { isTagGroupedList } from '@/utils/common';
-import ApiOperationMethod from '@/components/ApiOperationMethod';
 import styles from './ApiOperationsList.module.scss';
 
 export interface Props {

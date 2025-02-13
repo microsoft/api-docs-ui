@@ -1,0 +1,23 @@
+.infoPanel {
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+
+  .title {
+    margin: 0;
+    padding: 8px 16px;
+    background-color: #F5F5F5;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  + .infoPanel {
+    margin-top: 24px;
+  }
+}
