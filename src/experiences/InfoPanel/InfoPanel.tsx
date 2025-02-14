@@ -3,8 +3,11 @@ import classNames from 'classnames';
 import styles from './InfoPanel.module.scss';
 
 export interface Props {
+  /** An optional class name to be applied to panel's root */
   className?: string;
+  /** Panel title */
   title: string;
+  /** Panel content */
   children: React.ReactNode;
 }
 

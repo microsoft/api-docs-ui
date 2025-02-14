@@ -2,8 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './ApiOperationMethod.module.scss';
 
-interface Props {
+export interface Props {
+  /** An optional class name to be applied to the label */
   className?: string;
+  /** An API method */
   method: string;
 }
 

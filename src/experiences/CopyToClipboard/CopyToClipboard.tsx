@@ -2,12 +2,16 @@ import React, { useCallback, useState } from 'react';
 import { Button, Tooltip } from '@fluentui/react-components';
 import { Copy16Regular } from '@fluentui/react-icons';
 
-interface Props {
+export interface Props {
+  /** An optional class name to be applied to the button */
   className?: string;
+  /** Content that will be copied on click */
   content: string;
+  /** Button appearance */
+  appearance?: 'transparent' | 'subtle';
 }
 
-export const CopyToClipboard: React.FC<Props> = ({ className, content }) => {
+export const CopyToClipboard: React.FC<Props> = ({ className, content, appearance = 'transparent' }) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyClick = useCallback(async () => {
@@ -21,7 +25,7 @@ export const CopyToClipboard: React.FC<Props> = ({ className, content }) => {
       relationship="label"
       hideDelay={isCopied ? 3000 : 250}
     >
-      <Button className={className} icon={<Copy16Regular />} appearance="transparent" onClick={handleCopyClick} />
+      <Button className={className} icon={<Copy16Regular />} appearance={appearance} onClick={handleCopyClick} />
     </Tooltip>
   );
 };
