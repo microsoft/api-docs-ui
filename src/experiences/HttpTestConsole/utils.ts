@@ -96,3 +96,29 @@ export function normalizeReqData(
 
   return normalized;
 }
+
+/**
+ * Validates params list for duplicates and empty values.
+ */
+export function validateParamsList(
+  params: HttpReqParam[],
+  paramSchemas: ApiOperationParameter[]
+): Array<null | string> {
+  return params.map((param, i) => {
+    if (params.slice(0, i).find(({ name }) => name === param.name)) {
+      return `Parameter with this name already exists`;
+    }
+
+    const schema = paramSchemas.find((s) => s.name === param.name);
+
+    if (!schema) {
+      return null;
+    }
+
+    if (schema.required && !param.value) {
+      return `Value is required`;
+    }
+
+    return null;
+  });
+}

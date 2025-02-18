@@ -4,6 +4,7 @@ import { AddCircleRegular } from '@fluentui/react-icons';
 import { HttpReqParam } from '@/types/testConsole';
 import { ApiOperationParameter } from '@/types/apiOperation';
 import TestConsolePanel from '../TestConsolePanel';
+import { validateParamsList } from '@/experiences/HttpTestConsole/utils';
 import ParamForm from './ParamForm';
 import styles from './ParamsListForm.module.scss';
 
@@ -16,24 +17,15 @@ export interface Props {
   value: HttpReqParam[];
   /** List of available parameter definitions. Note that if there are required parameters, they must be present in value. */
   params?: ApiOperationParameter[];
-  /** List of error messages for each value item. If there is no error then it should be `null`. */
-  errors?: Array<string | null>;
   /** If true - adding or removing entries won't be allowed. */
   isStrictSchema?: boolean;
   /** Value change handler. In addition to value it accepts panel name for easier usage with useCallback. */
   onChange: (name: string, value: HttpReqParam[]) => void;
 }
 
-export const ParamsListForm: React.FC<Props> = ({
-  name,
-  title,
-  value,
-  params = [],
-  errors = [],
-  isStrictSchema,
-  onChange,
-}) => {
+export const ParamsListForm: React.FC<Props> = ({ name, title, value, params = [], isStrictSchema, onChange }) => {
   const requiredFieldsCount = useMemo(() => params.filter((param) => param.required).length, [params]);
+  const errors = useMemo(() => validateParamsList(value, params), [value, params]);
 
   const handleAddClick = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

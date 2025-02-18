@@ -65,9 +65,8 @@ export const WithErrors: Story = {
     title: 'Query',
     value: [
       { name: 'id', value: '' },
-      { name: 'wrongParam', value: '' },
+      { name: 'id', value: '' },
     ],
-    errors: [null, 'This param is not allowed'],
     isStrictSchema: true,
     onChange: () => {},
   },
