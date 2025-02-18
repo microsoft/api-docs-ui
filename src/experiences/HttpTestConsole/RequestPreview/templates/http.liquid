@@ -1,0 +1,11 @@
+{{request.method}} {{resolvedUrl}} HTTP/1.1
+
+{% for header in request.headers -%}
+{{ header.name }}: {{ header.value }}
+{% endfor %}
+{% if request.body != blank and request.bodyFormat == "raw" -%}
+{{ request.body }}
+{% endif -%}
+{% if console.request.binary != blank and request.bodyFormat == "binary" -%}
+[ {{ console.request.binary.name }} ]
+{% endif -%}

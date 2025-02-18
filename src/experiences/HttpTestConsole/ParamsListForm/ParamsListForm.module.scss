@@ -1,0 +1,20 @@
+.paramsListForm {
+  .header {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .empty {
+    display: flex;
+    align-items: center;
+    line-height: 32px;
+    gap: 10px;
+
+    button {
+      min-width: 0;
+      padding: 3px;
+    }
+  }
+}

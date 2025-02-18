@@ -1,0 +1,15 @@
+.testConsolePanel {
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  overflow: hidden;
+
+  .header {
+    background: #F3F2F1;
+  }
+
+  .content {
+    margin: 0;
+    padding: 32px 16px;
+  }
+}
+

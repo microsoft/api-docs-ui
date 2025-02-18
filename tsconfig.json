@@ -7,7 +7,9 @@
     "baseUrl": "./src",
     "outDir": "./dist",
     "declarationDir": "./dist/types",
-    "typeRoots": ["./src/types"],
+    "typeRoots": [
+      "./src/types"
+    ],
     "declaration": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

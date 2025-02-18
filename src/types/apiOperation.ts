@@ -11,10 +11,11 @@ export interface ApiOperation {
 export interface ApiOperationParameter {
   name: string;
   /** Parameter placement, e.g. "query", "template", "header", "body". */
-  in: string;
+  in?: string;
+  /** Parameter type label. Can be a React node for cases when you need to render a link to definition. */
   type: React.ReactNode;
   description?: string;
   required?: boolean;
   readOnly?: boolean;
-  examples?: any; // TODO
+  isSecret?: boolean;
 }

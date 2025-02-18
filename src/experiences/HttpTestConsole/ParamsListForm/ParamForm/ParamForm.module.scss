@@ -1,0 +1,11 @@
+.paramForm {
+  .fields {
+    > * {
+      flex: 1;
+    }
+  }
+
+  + .paramForm {
+    margin-top: 27px;
+  }
+}

@@ -1,0 +1,12 @@
+curl -v -X {{request.method}} "{{resolvedUrl}}"
+{%- for header in request.headers %} -H "
+{{ header.name }}: {{ header.value }}
+{%- endfor -%}
+{% if request.body != blank -%}
+{%- if request.bodyFormat == "raw" -%}
+{%- assign formattedBody = request.body | replace:'"','\\"' -%}
+{%- assign formattedBody = formattedBody | replace: '\r\n', ' ' -%}
+{%- assign formattedBody = formattedBody | replace: '     ', ' ' %} --data-raw "{{formattedBody}}"
+{%- elsif request.bodyFormat == "binary" %} --data-binary "@ < path/to/{{console.request.binary.name}} >"
+{% endif -%}
+{% endif -%}
