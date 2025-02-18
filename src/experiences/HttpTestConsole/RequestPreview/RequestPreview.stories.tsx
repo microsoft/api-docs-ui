@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { HttpBodyFormats } from '@/enums/HttpBodyFormats';
 import HttpTestConsole from '../HttpTestConsole';
-import { HttpBodyFormats } from '@/types/testConsole';
 import RequestPreview from './RequestPreview';
 
 const meta = {

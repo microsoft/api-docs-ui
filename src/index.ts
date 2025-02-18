@@ -3,6 +3,8 @@ export type * from './types/apiOperation';
 export type * from './types/common';
 export type * from './types/testConsole';
 
+export * from './enums/HttpBodyFormats';
+
 export { default as ApiOperationMethod } from './experiences/ApiOperationMethod';
 export { default as CopyToClipboard } from './experiences/CopyToClipboard';
 export { default as ApiListCardsView } from './experiences/ApiListCardsView';

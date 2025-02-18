@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { HttpBodyFormats, HttpReqData, HttpReqParam } from '@/types/testConsole';
+import { HttpReqData, HttpReqParam } from '@/types/testConsole';
+import { HttpBodyFormats } from '@/enums/HttpBodyFormats';
 import HttpTestConsole from './HttpTestConsole';
 
 const meta = {

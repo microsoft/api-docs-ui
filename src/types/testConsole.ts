@@ -1,9 +1,5 @@
 import { ApiOperationParameter } from '@/types/apiOperation';
-
-export enum HttpBodyFormats {
-  RAW = 'raw',
-  BINARY = 'binary',
-}
+import { HttpBodyFormats } from '@/enums/HttpBodyFormats';
 
 export interface HttpParamSchemasByLocation {
   query: ApiOperationParameter[];
