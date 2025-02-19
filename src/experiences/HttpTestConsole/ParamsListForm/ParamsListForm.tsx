@@ -3,8 +3,8 @@ import { Button } from '@fluentui/react-components';
 import { AddCircleRegular } from '@fluentui/react-icons';
 import { HttpReqParam } from '@/types/testConsole';
 import { ApiOperationParameter } from '@/types/apiOperation';
-import TestConsolePanel from '../TestConsolePanel';
 import { validateParamsList } from '@/experiences/HttpTestConsole/utils';
+import TestConsolePanel from '../TestConsolePanel';
 import ParamForm from './ParamForm';
 import styles from './ParamsListForm.module.scss';
 

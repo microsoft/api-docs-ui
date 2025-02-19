@@ -1,0 +1,15 @@
+@use "../../styles/prism.scss";
+
+.rawSchema {
+  h3 {
+    position: relative;
+    padding: 16px !important;
+
+    .copyBtn {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+    }
+  }
+}

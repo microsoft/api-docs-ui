@@ -13,3 +13,4 @@ export { default as ApiOperationsList } from './experiences/ApiOperationsList';
 export { default as InfoPanel } from './experiences/InfoPanel';
 export { default as ParametersTable } from './experiences/ParametersTable';
 export { default as HttpTestConsole } from './experiences/HttpTestConsole';
+export { default as RawSchema } from './experiences/RawSchema';

@@ -6,7 +6,7 @@ export interface Props {
   /** An optional class name to be applied to panel's root */
   className?: string;
   /** Panel title */
-  title: string;
+  title: React.ReactNode;
   /** Panel content */
   children: React.ReactNode;
 }
