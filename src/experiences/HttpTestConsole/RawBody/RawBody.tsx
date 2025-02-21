@@ -1,8 +1,13 @@
-import React, { useCallback } from 'react';
-import { Button, Textarea } from '@fluentui/react-components';
-import { AddCircleRegular, DeleteRegular } from '@fluentui/react-icons';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Dropdown, Option, Textarea, Field } from '@fluentui/react-components';
+import { AddCircleRegular, DeleteRegular, ArrowClockwiseRegular } from '@fluentui/react-icons';
 import TestConsolePanel from '../TestConsolePanel';
 import styles from './RawBody.module.scss';
+
+interface RawDataSample {
+  name: string;
+  value: string;
+}
 
 export interface Props {
   /** Panel's name unique to current test console (used for handling its state only and not displayed anywhere). */
@@ -11,12 +16,47 @@ export interface Props {
   title?: string;
   /** Current body value. If undefined - there is currently no body. */
   value?: string;
+  /**
+   * Data samples to be displayed in the dropdown.
+   * If passed - the first example will be selected by default.
+   * If there is only one value - dropdown will be hidden.
+   */
+  dataSamples?: RawDataSample[];
   /** Body value change callback. */
   onChange: (value: string | undefined) => void;
 }
 
-export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, onChange }) => {
+export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, dataSamples, onChange }) => {
+  const [currentSample, setCurrentSample] = useState<RawDataSample | undefined>(dataSamples?.[0]);
+  const [originalValue, setOriginalValue] = useState(value);
+
   const isAdded = value !== undefined;
+  const hasValueChanged = value !== originalValue;
+
+  const applySample = useCallback(
+    (sample: RawDataSample) => {
+      onChange(sample.value);
+      setOriginalValue(sample.value);
+      setCurrentSample(sample);
+    },
+    [onChange]
+  );
+
+  useEffect(() => {
+    if (!dataSamples?.length) {
+      return;
+    }
+
+    applySample(dataSamples[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSampleSelect = useCallback<React.ComponentProps<typeof Dropdown>['onOptionSelect']>(
+    (_, { optionValue }) => {
+      applySample(dataSamples?.find((sample) => sample.name === optionValue));
+    },
+    [applySample, dataSamples]
+  );
 
   const handleChange = useCallback<React.ComponentProps<typeof Textarea>['onChange']>(
     (_, { value }) => {
@@ -29,6 +69,7 @@ export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, onChange
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (e: React.PointerEvent<any>) => {
       e.stopPropagation();
+      setOriginalValue('');
       onChange('');
     },
     [onChange]
@@ -41,6 +82,10 @@ export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, onChange
     },
     [onChange]
   );
+
+  const handleRevertClick = useCallback(() => {
+    onChange(originalValue);
+  }, [onChange, originalValue]);
 
   function renderHeader() {
     let action = (
@@ -77,13 +122,36 @@ export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, onChange
     }
 
     return (
-      <Textarea
-        className={styles.bodyTextArea}
-        placeholder="Enter request body"
-        value={value}
-        autoFocus
-        onChange={handleChange}
-      />
+      <>
+        {dataSamples?.length > 1 && (
+          <Dropdown
+            className={styles.sampleDropdown}
+            value={currentSample?.name}
+            selectedOptions={[currentSample?.name]}
+            onOptionSelect={handleSampleSelect}
+          >
+            {dataSamples.map((dataSample) => (
+              <Option key={dataSample.name} value={dataSample.name}>
+                {dataSample.name}
+              </Option>
+            ))}
+          </Dropdown>
+        )}
+        <Field>
+          <Textarea
+            className={styles.bodyTextArea}
+            placeholder="Enter request body"
+            value={value}
+            autoFocus
+            onChange={handleChange}
+          />
+        </Field>
+        {hasValueChanged && (
+          <Button className={styles.revertBtn} icon={<ArrowClockwiseRegular />} onClick={handleRevertClick}>
+            Revert changes
+          </Button>
+        )}
+      </>
     );
   }
 

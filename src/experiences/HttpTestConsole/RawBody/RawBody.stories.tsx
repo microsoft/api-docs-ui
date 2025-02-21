@@ -28,7 +28,34 @@ export const Default: Story = {
 
     return (
       <HttpTestConsole>
-        <HttpTestConsole.RawBody name={props.name} value={value} onChange={setValue} />
+        <HttpTestConsole.RawBody {...props} value={value} onChange={setValue} />
+      </HttpTestConsole>
+    );
+  },
+};
+
+export const WithDataSamples: Story = {
+  args: {
+    name: 'body',
+    value: '',
+    dataSamples: [
+      {
+        name: 'Sample (json)',
+        value: '{\n  "key": "value"\n}',
+      },
+      {
+        name: 'Sample (xml)',
+        value: '<key>value</key>',
+      },
+    ],
+    onChange: () => {},
+  },
+  render: (props) => {
+    const [value, setValue] = useState(props.value);
+
+    return (
+      <HttpTestConsole>
+        <HttpTestConsole.RawBody {...props} value={value} onChange={setValue} />
       </HttpTestConsole>
     );
   },
