@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Dropdown, Option, Textarea, Field } from '@fluentui/react-components';
+import { Button, Dropdown, Option, Textarea, Field, Tooltip } from '@fluentui/react-components';
 import { AddCircleRegular, DeleteRegular, ArrowClockwiseRegular } from '@fluentui/react-icons';
+import classNames from 'classnames';
 import TestConsolePanel from '../TestConsolePanel';
 import styles from './RawBody.module.scss';
 
@@ -96,7 +97,9 @@ export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, dataSamp
 
     if (isAdded) {
       action = (
-        <Button as="a" icon={<DeleteRegular />} appearance="transparent" title="Remove" onClick={handleRemoveClick} />
+        <Tooltip content="Remove body" relationship="label">
+          <Button as="a" icon={<DeleteRegular />} appearance="transparent" onClick={handleRemoveClick} />
+        </Tooltip>
       );
     }
 
@@ -125,7 +128,9 @@ export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, dataSamp
       <>
         {dataSamples?.length > 1 && (
           <Dropdown
-            className={styles.sampleDropdown}
+            aria-label="Sample request body"
+            placeholder="Select sample request body"
+            className={classNames(styles.sampleDropdown, 'request-body-dropdown')}
             value={currentSample?.name}
             selectedOptions={[currentSample?.name]}
             onOptionSelect={handleSampleSelect}
@@ -139,15 +144,21 @@ export const RawBody: React.FC<Props> = ({ name, title = 'Body', value, dataSamp
         )}
         <Field>
           <Textarea
-            className={styles.bodyTextArea}
+            className={classNames(styles.bodyTextArea, 'raw-textarea')}
+            aria-label="Request body"
             placeholder="Enter request body"
+            resize="vertical"
             value={value}
             autoFocus
             onChange={handleChange}
           />
         </Field>
         {hasValueChanged && (
-          <Button className={styles.revertBtn} icon={<ArrowClockwiseRegular />} onClick={handleRevertClick}>
+          <Button
+            className={classNames(styles.revertBtn, 'body-revert-button')}
+            icon={<ArrowClockwiseRegular />}
+            onClick={handleRevertClick}
+          >
             Revert changes
           </Button>
         )}

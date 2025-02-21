@@ -39,13 +39,24 @@ export const ApiOperationsList: React.FC<Props> = ({
     return (
       <Stack
         key={operation.name}
-        className={classNames(styles.operation, isSelected && styles.isSelected, !allowLabelWrap && styles.nowrap)}
+        className={classNames(
+          styles.operation,
+          'operation',
+          isSelected && styles.isSelected,
+          isSelected && 'is-selected-operation',
+          !allowLabelWrap && styles.nowrap
+        )}
         horizontal
         onClick={() => onOperationSelect(operation)}
       >
-        {!!operation.method && <ApiOperationMethod method={operation.method} />}
+        {!!operation.method && (
+          <ApiOperationMethod
+            className={classNames(styles.method, `operation-method method-${operation.method}`)}
+            method={operation.method}
+          />
+        )}
 
-        <span className={styles.name}>{operation[labelField]}</span>
+        <span className={classNames(styles.name, 'operation-name')}>{operation[labelField]}</span>
       </Stack>
     );
   }

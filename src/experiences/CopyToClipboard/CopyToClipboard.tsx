@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Button, Tooltip } from '@fluentui/react-components';
 import { Copy16Regular } from '@fluentui/react-icons';
+import classNames from 'classnames';
 import { getFluentProviderRoot } from '@/utils/fluent';
 
 export interface Props {
@@ -27,7 +28,12 @@ export const CopyToClipboard: React.FC<Props> = ({ className, content, appearanc
       mountNode={getFluentProviderRoot()}
       hideDelay={isCopied ? 3000 : 250}
     >
-      <Button className={className} icon={<Copy16Regular />} appearance={appearance} onClick={handleCopyClick} />
+      <Button
+        className={classNames(className, 'request-copy-button')}
+        icon={<Copy16Regular />}
+        appearance={appearance}
+        onClick={handleCopyClick}
+      />
     </Tooltip>
   );
 };

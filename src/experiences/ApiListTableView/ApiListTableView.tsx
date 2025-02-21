@@ -8,6 +8,7 @@ import {
   TableHeaderCell,
   TableRow,
   Button,
+  Body1Strong,
 } from '@fluentui/react-components';
 import ExpandIcon from '@/components/ExpandIcon';
 import { Api } from '@/types/api';
@@ -64,10 +65,17 @@ export const ApiListTableView: React.FC<Props> = ({ apis, showApiType, apiLinkPr
   function renderApisByTagRows(apisByTag: Array<TagGroup<Api>>) {
     return apisByTag.map(({ tag, items }) => (
       <React.Fragment key={tag}>
-        <TableRow onClick={() => setExpandedTags((old) => toggleSetValue(old, tag))}>
+        <TableRow
+          className="fui-table-collapsibleRow"
+          onClick={() => setExpandedTags((old) => toggleSetValue(old, tag))}
+        >
           <TableCell colSpan={fullWidthColSpan}>
-            <Button icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />} appearance="transparent">
-              {tag}
+            <Button
+              className="no-border align-center"
+              icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />}
+              appearance="transparent"
+            >
+              <Body1Strong>{tag}</Body1Strong>
             </Button>
           </TableCell>
         </TableRow>
@@ -86,19 +94,19 @@ export const ApiListTableView: React.FC<Props> = ({ apis, showApiType, apiLinkPr
 
   return (
     <ScrollableTableContainer className={styles.apiListTableView}>
-      <Table size="small">
+      <Table className="fui-table" size="small">
         <TableHeader>
-          <TableRow>
+          <TableRow className="fui-table-headerRow">
             <TableHeaderCell>
-              <strong>Name</strong>
+              <Body1Strong>Name</Body1Strong>
             </TableHeaderCell>
             <TableHeaderCell>
-              <strong>Description</strong>
+              <Body1Strong>Description</Body1Strong>
             </TableHeaderCell>
 
             {showApiType && (
               <TableHeaderCell className={styles.typeCol}>
-                <strong>Type</strong>
+                <Body1Strong>Type</Body1Strong>
               </TableHeaderCell>
             )}
           </TableRow>

@@ -1,7 +1,11 @@
 .paramForm {
-  .fields {
-    > * {
+  .fieldsRow {
+    .field {
       flex: 1;
+
+      &:first-of-type {
+        min-width: 50%;
+      }
     }
   }
 

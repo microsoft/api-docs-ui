@@ -5,6 +5,10 @@
   border-left: 5px solid transparent;
   cursor: pointer;
 
+  .method {
+    min-width: 50px;
+  }
+
   .name {
     width: 100%;
   }

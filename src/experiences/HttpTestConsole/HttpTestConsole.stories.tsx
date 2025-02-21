@@ -24,12 +24,19 @@ export const Default: Story = {
     const [data, setData] = useState({
       urlParams: [{ name: 'resourceId', value: '' }],
       query: [],
-      headers: [{ name: 'Content-Type', value: 'application/json' }],
+      headers: [
+        { name: 'Authorization', value: 'Bearer 12345678' },
+        { name: 'Content-Type', value: 'application/json' },
+      ],
       body: '',
     });
 
     const handleChange = useCallback((name: string, value: HttpReqParam[]) => {
       setData((prev) => ({ ...prev, [name]: value }));
+    }, []);
+
+    const handleBodyChange = useCallback((value: string) => {
+      setData((prev) => ({ ...prev, body: value }));
     }, []);
 
     const reqData = useMemo<HttpReqData>(
@@ -56,7 +63,14 @@ export const Default: Story = {
           onChange={handleChange}
         />
         <HttpTestConsole.ParamsListForm name="query" title="Query" value={data.query} onChange={handleChange} />
-        <HttpTestConsole.ParamsListForm name="headers" title="Headers" value={data.headers} onChange={handleChange} />
+        <HttpTestConsole.ParamsListForm
+          name="headers"
+          title="Headers"
+          params={[{ name: 'Authorization', type: 'string', isSecret: true }]}
+          value={data.headers}
+          onChange={handleChange}
+        />
+        <HttpTestConsole.RawBody name="body" value={data.body} onChange={handleBodyChange} />
         <HttpTestConsole.RequestPreview
           name="request"
           reqData={reqData}

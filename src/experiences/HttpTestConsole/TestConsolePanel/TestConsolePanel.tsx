@@ -18,9 +18,9 @@ export interface Props {
 
 export const TestConsolePanel: React.FC<Props> = ({ className, name, header, children }) => {
   return (
-    <AccordionItem className={classNames(styles.testConsolePanel, className)} value={name}>
-      <AccordionHeader className={styles.header}>{header}</AccordionHeader>
-      <AccordionPanel className={styles.content}>{children}</AccordionPanel>
+    <AccordionItem className={classNames(styles.testConsolePanel, className, 'operation-table')} value={name}>
+      <AccordionHeader className={classNames(styles.header, 'operation-table-header')}>{header}</AccordionHeader>
+      <AccordionPanel className={classNames(styles.content, 'operation-table-body-console')}>{children}</AccordionPanel>
     </AccordionItem>
   );
 };

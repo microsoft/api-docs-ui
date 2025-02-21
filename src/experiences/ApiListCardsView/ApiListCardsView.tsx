@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Stack } from '@fluentui/react';
-import { Button } from '@fluentui/react-components';
+import { Body1Strong, Button } from '@fluentui/react-components';
+import classNames from 'classnames';
 import { Api } from '@/types/api';
 import { TagGroup } from '@/types/common';
 import { isTagGroupedList } from '@/utils/common';
@@ -33,16 +34,16 @@ export const ApiListCardsView: React.FC<Props> = ({ apis, cardsPerRow = 3, showA
 
     return (
       <div
-        className={styles.apiCards}
+        className={classNames(styles.apiCards, 'fui-list-cards-container')}
         style={{
           gridTemplateColumns: `repeat(${cardsPerRow}, 1fr)`,
         }}
       >
         {apis.map((api) => (
-          <div key={api.name} className={styles.card}>
+          <div key={api.name} className={classNames(styles.card, 'fui-list-card')}>
             <div style={{ height: '100%' }}>
               {showApiType && (
-                <div className={styles.tags}>
+                <div className={classNames(styles.tags, 'fui-list-card-tags')}>
                   <span>API</span>
                   {!!api.type && <span>{api.type}</span>}
                 </div>
@@ -53,7 +54,7 @@ export const ApiListCardsView: React.FC<Props> = ({ apis, cardsPerRow = 3, showA
             </div>
 
             <Stack horizontal>
-              <a title={api.displayName} {...apiLinkPropsProvider(api)}>
+              <a className="button" role="button" title={api.displayName} {...apiLinkPropsProvider(api)}>
                 <Button>Go to API</Button>
               </a>
             </Stack>
@@ -70,15 +71,13 @@ export const ApiListCardsView: React.FC<Props> = ({ apis, cardsPerRow = 3, showA
   return (
     <div className={styles.tagsContainer}>
       {apis.map(({ tag, items }) => (
-        <div key={tag}>
+        <div key={tag} className="fui-list-tag-cards-container">
           <Button
-            className={styles.expandBtn}
+            className={classNames(styles.expandBtn, 'fui-list-tag-cards no-border')}
             icon={<ExpandIcon isExpanded={expandedTags.has(tag)} />}
             onClick={() => setExpandedTags((old) => toggleSetValue(old, tag))}
           >
-            <span className="strong" style={{ marginLeft: '.5rem' }}>
-              {tag}
-            </span>
+            <Body1Strong style={{ marginLeft: '.5rem' }}>{tag}</Body1Strong>
           </Button>
 
           {expandedTags.has(tag) && renderApiCards(items)}

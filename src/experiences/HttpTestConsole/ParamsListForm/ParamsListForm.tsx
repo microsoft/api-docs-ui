@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import { Button } from '@fluentui/react-components';
+import { Body1Strong, Button } from '@fluentui/react-components';
+import { Stack } from '@fluentui/react';
 import { AddCircleRegular } from '@fluentui/react-icons';
 import { HttpReqParam } from '@/types/testConsole';
 import { ApiOperationParameter } from '@/types/apiOperation';
@@ -66,7 +67,9 @@ export const ParamsListForm: React.FC<Props> = ({ name, title, value, params = [
       name={name}
       header={
         <div className={styles.header}>
-          <span>{title}</span>
+          <Stack verticalAlign="center" horizontalAlign="space-between" horizontal>
+            <Body1Strong>{title}</Body1Strong>
+          </Stack>
           {!isStrictSchema && (
             <Button as="a" size="small" icon={<AddCircleRegular />} onClick={handleAddClick}>
               Add
