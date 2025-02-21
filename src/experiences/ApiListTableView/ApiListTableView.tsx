@@ -15,6 +15,7 @@ import { TagGroup } from '@/types/common';
 import { toggleSetValue } from '@/utils/toggleSetValue';
 import { isTagGroupedList } from '@/utils/common';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
+import ScrollableTableContainer from '@/components/ScrollableTableContainer';
 import styles from './ApiListTableView.module.scss';
 
 export interface Props {
@@ -84,26 +85,28 @@ export const ApiListTableView: React.FC<Props> = ({ apis, showApiType, apiLinkPr
   }
 
   return (
-    <Table className={styles.apiListTableView} size="small">
-      <TableHeader>
-        <TableRow>
-          <TableHeaderCell>
-            <strong>Name</strong>
-          </TableHeaderCell>
-          <TableHeaderCell>
-            <strong>Description</strong>
-          </TableHeaderCell>
-
-          {showApiType && (
-            <TableHeaderCell className={styles.typeCol}>
-              <strong>Type</strong>
+    <ScrollableTableContainer className={styles.apiListTableView}>
+      <Table size="small">
+        <TableHeader>
+          <TableRow>
+            <TableHeaderCell>
+              <strong>Name</strong>
             </TableHeaderCell>
-          )}
-        </TableRow>
-      </TableHeader>
+            <TableHeaderCell>
+              <strong>Description</strong>
+            </TableHeaderCell>
 
-      <TableBody>{renderBody()}</TableBody>
-    </Table>
+            {showApiType && (
+              <TableHeaderCell className={styles.typeCol}>
+                <strong>Type</strong>
+              </TableHeaderCell>
+            )}
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>{renderBody()}</TableBody>
+      </Table>
+    </ScrollableTableContainer>
   );
 };
 

@@ -1,0 +1,8 @@
+.scrollableTableContainer {
+  width: 100%;
+  overflow: auto;
+
+  table {
+    min-width: 600px;
+  }
+}

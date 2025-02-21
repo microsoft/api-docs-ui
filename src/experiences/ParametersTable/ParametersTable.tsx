@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Badge } from '@fluentui/react-components';
 import InfoTable from '@/components/InfoTable';
 import { ApiOperationParameter } from '@/types/apiOperation';
+import ScrollableTableContainer from '@/components/ScrollableTableContainer';
 import styles from './ParametersTable.module.scss';
 
 export interface Props {
@@ -51,14 +52,17 @@ const columnConfigByKey = {
 
 const columnOrder: Array<keyof ApiOperationParameter> = ['name', 'in', 'required', 'readOnly', 'type', 'description'];
 
-// TODO: advanced type definition renderer
 export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) => {
   const columns = useMemo(
     () => columnOrder.filter((name) => !hiddenColumns?.includes(name)).map((name) => columnConfigByKey[name]),
     [hiddenColumns]
   );
 
-  return <InfoTable dataItems={parameters} columns={columns} noDataMessage="No parameters" />;
+  return (
+    <ScrollableTableContainer>
+      <InfoTable dataItems={parameters} columns={columns} noDataMessage="No parameters" />
+    </ScrollableTableContainer>
+  );
 };
 
 export default React.memo(ParametersTable);
