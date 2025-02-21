@@ -47,16 +47,19 @@ export function resolveUrlFromReqData(reqData: HttpReqData): string {
     return urlParam?.value || match;
   });
 
-  const url = new URL(resolvedTemplate);
+  const searchParams = new URLSearchParams();
   reqData.query.forEach((param) => {
     if (!param.value) {
       return;
     }
 
-    url.searchParams.set(param.name, param.value);
+    searchParams.set(param.name, param.value);
   });
 
-  return decodeURI(url.toString());
+  if (!searchParams.toString()) {
+    return resolvedTemplate;
+  }
+  return `${resolvedTemplate}?${searchParams.toString()}`;
 }
 
 /**
