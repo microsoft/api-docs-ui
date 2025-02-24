@@ -1,26 +1,26 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Field, Input, Tooltip } from '@fluentui/react-components';
+import { Button, Field, Input, Select, Tooltip } from '@fluentui/react-components';
 import { EyeRegular, EyeOffRegular } from '@fluentui/react-icons';
 import { Stack } from '@fluentui/react';
 import { DeleteRegular } from '@fluentui/react-icons';
 import classNames from 'classnames';
 import { HttpReqParam } from '@/types/testConsole';
+import { ApiOperationParameter } from '@/types/apiOperation';
 import styles from './ParamForm.module.scss';
 
 interface Props {
   value: HttpReqParam;
+  definition?: ApiOperationParameter;
   error?: string;
-  isSecret?: boolean;
-  isRequired?: boolean;
   onRemove?: () => void;
   onChange: (value: HttpReqParam) => void;
 }
 
-export const ParamForm: React.FC<Props> = ({ value, error, isSecret, isRequired, onRemove, onChange }) => {
+export const ParamForm: React.FC<Props> = ({ value, definition, error, onRemove, onChange }) => {
   const [isSecretRevealed, setIsSecretRevealed] = useState(false);
 
   const handleFieldChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       onChange({ ...value, [e.currentTarget.name]: e.currentTarget.value });
     },
     [onChange, value]
@@ -29,6 +29,28 @@ export const ParamForm: React.FC<Props> = ({ value, error, isSecret, isRequired,
   const handleSecretToggleClick = useCallback(() => {
     setIsSecretRevealed((prev) => !prev);
   }, []);
+
+  function renderValueField() {
+    if (definition?.enum) {
+      return (
+        <Select placeholder="Value..." name="value" value={value.value} onChange={handleFieldChange}>
+          {definition.enum.map((value) => (
+            <option key={value}>{value}</option>
+          ))}
+        </Select>
+      );
+    }
+
+    return (
+      <Input
+        placeholder="Value..."
+        type={definition?.isSecret && !isSecretRevealed ? 'password' : 'text'}
+        name="value"
+        value={value.value}
+        onChange={handleFieldChange}
+      />
+    );
+  }
 
   return (
     <div className={styles.paramForm}>
@@ -48,21 +70,15 @@ export const ParamForm: React.FC<Props> = ({ value, error, isSecret, isRequired,
             placeholder="Name..."
             name="name"
             value={value.name}
-            disabled={isRequired}
+            disabled={definition?.required}
             onChange={handleFieldChange}
           />
         </Field>
-        <Field className={classNames(styles.field, 'param-value')}>
-          <Input
-            placeholder="Value..."
-            type={isSecret && !isSecretRevealed ? 'password' : 'text'}
-            name="value"
-            value={value.value}
-            onChange={handleFieldChange}
-          />
+        <Field className={classNames(styles.field, 'param-value')} validationState="none">
+          {renderValueField()}
         </Field>
 
-        {isSecret && (
+        {definition?.isSecret && (
           <Tooltip content={isSecretRevealed ? 'Hide secret' : 'Reveal secret'} relationship="label">
             <Button
               icon={isSecretRevealed ? <EyeOffRegular /> : <EyeRegular />}

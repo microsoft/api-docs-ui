@@ -25,7 +25,6 @@ export interface Props {
 }
 
 export const ParamsListForm: React.FC<Props> = ({ name, title, value, params = [], isStrictSchema, onChange }) => {
-  const requiredFieldsCount = useMemo(() => params.filter((param) => param.required).length, [params]);
   const errors = useMemo(() => validateParamsList(value, params), [value, params]);
 
   const handleAddClick = useCallback(
@@ -88,17 +87,15 @@ export const ParamsListForm: React.FC<Props> = ({ name, title, value, params = [
         </div>
       )}
       {value.map((field, index) => {
-        const isRequired = index < requiredFieldsCount;
         const definition = params.find(({ name }) => name === field.name);
 
         return (
           <ParamForm
             key={index}
             value={field}
+            definition={definition}
             error={errors[index]}
-            isSecret={definition?.isSecret}
-            isRequired={isRequired}
-            onRemove={!isStrictSchema && !isRequired && handleRemoveParam.bind(null, index)}
+            onRemove={!isStrictSchema && !definition?.required && handleRemoveParam.bind(null, index)}
             onChange={handleFieldChange.bind(null, index)}
           />
         );

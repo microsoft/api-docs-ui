@@ -20,6 +20,8 @@ export interface ApiOperationParameter {
   in?: string;
   /** Parameter type label. Can be a React node for cases when you need to render a link to definition. */
   type: React.ReactNode;
+  /** If present, it means that the value can be only one of the values in the provided list. */
+  enum?: string[];
   description?: string;
   examples?: ApiOperationExample[];
   required?: boolean;

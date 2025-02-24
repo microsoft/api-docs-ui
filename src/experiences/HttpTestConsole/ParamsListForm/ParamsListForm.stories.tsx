@@ -59,6 +59,28 @@ export const WithRequiredField: Story = {
   },
 };
 
+export const WithEnumField: Story = {
+  args: {
+    name: 'query',
+    title: 'Query',
+    value: [
+      { name: 'size', value: 'medium' },
+      { name: 'otherParam', value: '' },
+    ],
+    params: [{ name: 'size', type: 'string', enum: ['small', 'medium', 'large'] }],
+    onChange: () => {},
+  },
+  render: (props) => {
+    const [value, setValue] = useState(props.value);
+
+    return (
+      <HttpTestConsole>
+        <HttpTestConsole.ParamsListForm {...props} value={value} onChange={(_, v) => setValue(v)} />
+      </HttpTestConsole>
+    );
+  },
+};
+
 export const WithErrors: Story = {
   args: {
     name: 'query',

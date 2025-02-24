@@ -1,10 +1,12 @@
 .paramForm {
   .fieldsRow {
+    width: 100%;
+
     .field {
       flex: 1;
 
       &:first-of-type {
-        min-width: 50%;
+        max-width: 40%;
       }
     }
   }
