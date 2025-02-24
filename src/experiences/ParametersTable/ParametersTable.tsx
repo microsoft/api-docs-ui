@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { Badge } from '@fluentui/react-components';
 import InfoTable from 'experiences/InfoTable';
-import { ApiOperationParameter } from '@/types/apiOperation';
+import { ApiOperationExample, ApiOperationParameter } from '@/types/apiOperation';
 import styles from './ParametersTable.module.scss';
 
-export interface Props {
-  /** List of API request parameters */
-  parameters: ApiOperationParameter[];
-  /** List of columns to hide */
-  hiddenColumns?: Array<keyof ApiOperationParameter>;
+interface ColumnConfig {
+  key: string;
+  title: string;
+  renderer?: (value: unknown) => React.ReactNode;
+  autoHide?: boolean;
 }
 
 function badgeRenderer(value: string) {
@@ -19,7 +19,7 @@ function badgeRenderer(value: string) {
   );
 }
 
-const columnConfigByKey = {
+const columnConfigByKey: Record<string, ColumnConfig> = {
   name: {
     key: 'name',
     title: 'Name',
@@ -47,14 +47,57 @@ const columnConfigByKey = {
     key: 'description',
     title: 'Description',
   },
+  examples: {
+    key: 'examples',
+    title: 'Examples',
+    autoHide: true,
+    renderer: (examples: ApiOperationExample[]) =>
+      examples.map((example, i) => (
+        <div key={i} className={styles.example}>
+          {!!example.title && example.title !== 'default' && <strong>{example.title}: </strong>}
+          <span>{example.value}</span>
+          <div>{example.description}</div>
+        </div>
+      )),
+  },
 };
 
-const columnOrder: Array<keyof ApiOperationParameter> = ['name', 'in', 'required', 'readOnly', 'type', 'description'];
+const columnOrder: Array<keyof typeof columnConfigByKey> = [
+  'name',
+  'in',
+  'required',
+  'readOnly',
+  'type',
+  'description',
+  'examples',
+];
+
+export interface Props {
+  /** List of API request parameters */
+  parameters: ApiOperationParameter[];
+  /** List of columns to hide */
+  hiddenColumns?: Array<keyof typeof columnConfigByKey>;
+}
 
 export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) => {
+  const resolvedHiddenColumns = useMemo(() => {
+    const result = (hiddenColumns || []).slice();
+
+    Object.entries<ColumnConfig>(columnConfigByKey)
+      .filter(([, { key, autoHide }]) => !hiddenColumns?.includes(key) && autoHide)
+      .forEach(([key]) => {
+        const isValuePresent = !!parameters.some((parameter) => parameter[key] !== undefined);
+        if (!isValuePresent) {
+          result.push(key);
+        }
+      });
+
+    return result;
+  }, [hiddenColumns, parameters]);
+
   const columns = useMemo(
-    () => columnOrder.filter((name) => !hiddenColumns?.includes(name)).map((name) => columnConfigByKey[name]),
-    [hiddenColumns]
+    () => columnOrder.filter((name) => !resolvedHiddenColumns?.includes(name)).map((name) => columnConfigByKey[name]),
+    [resolvedHiddenColumns]
   );
 
   const columnLabels = useMemo(() => columns.map(({ title }) => title), [columns]);
@@ -63,9 +106,14 @@ export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) 
     <InfoTable columnLabels={columnLabels} noDataMessage="No parameters">
       {parameters.map((parameter) => (
         <InfoTable.Row key={parameter.name}>
-          {columns.map(({ key, renderer }) => (
-            <InfoTable.Cell key={key}>{renderer ? renderer(parameter[key]) : parameter[key]}</InfoTable.Cell>
-          ))}
+          {columns.map(({ key, renderer }) => {
+            let value = parameter[key];
+            if (renderer && value !== undefined) {
+              value = renderer(value);
+            }
+
+            return <InfoTable.Cell key={key}>{value}</InfoTable.Cell>;
+          })}
         </InfoTable.Row>
       ))}
     </InfoTable>

@@ -22,6 +22,10 @@ const parameters = [
     required: true,
     type: 'string',
     description: 'The title of the post.',
+    examples: [
+      { title: 'Example 1', value: 'Lorem Ipsum', description: 'First example' },
+      { title: 'Example 2', value: 'Dolor sit amet', description: 'Second example' },
+    ],
   },
   {
     name: 'content',
@@ -29,6 +33,7 @@ const parameters = [
     required: true,
     type: 'string',
     description: 'Markdown post content.',
+    examples: [{ value: 'Sample content' }],
   },
   {
     name: 'categoryId',
