@@ -1,0 +1,27 @@
+.apiCard {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.125rem 0 rgba(0, 0, 0, 0.24), 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.28);
+
+  .tags {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    span {
+      color: #616161;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1rem;
+      font-size: .9em;
+
+      + span {
+        padding-left: 0.75rem;
+        border-left: 1px solid #616161;
+      }
+    }
+  }
+}

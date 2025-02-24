@@ -6,9 +6,12 @@ import rehypeTruncate from 'rehype-truncate';
 // TODO: upgrade this package and all related ones when https://github.com/hashicorp/next-mdx-remote/issues/403 fixed
 import ReactMarkdown from 'react-markdown';
 
-interface Props {
+export interface Props {
+  /** A markdown to render. */
   markdown: string;
+  /** Maximum length of the rendered markdown. */
   maxLength?: number;
+  /** If true, the markdown will be truncated. */
   shouldTruncate?: boolean;
 }
 

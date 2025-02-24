@@ -37,33 +37,35 @@ export const HttpTestConsole: React.FC<Props> = ({ children }) => {
     };
   }, []);
 
-  const extendedChildren = useMemo(() => {
-    return React.Children.map(children, (child) => {
-      if (!React.isValidElement(child)) {
+  const extendedChildren = useMemo(
+    () =>
+      React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) {
+          return child;
+        }
+
+        if (child.type === ParamsListForm) {
+          return React.cloneElement<React.ComponentProps<typeof ParamsListForm>>(
+            child as React.FunctionComponentElement<React.ComponentProps<typeof ParamsListForm>>,
+            {
+              onChange: wrapOnChangeWithAutoPanelOpen(child.props.name, child.props.onChange),
+            }
+          );
+        }
+
+        if (child.type === RawBody) {
+          return React.cloneElement<React.ComponentProps<typeof RawBody>>(
+            child as React.FunctionComponentElement<React.ComponentProps<typeof RawBody>>,
+            {
+              onChange: wrapOnChangeWithAutoPanelOpen(child.props.name, child.props.onChange),
+            }
+          );
+        }
+
         return child;
-      }
-
-      if (child.type === ParamsListForm) {
-        return React.cloneElement<React.ComponentProps<typeof ParamsListForm>>(
-          child as React.FunctionComponentElement<React.ComponentProps<typeof ParamsListForm>>,
-          {
-            onChange: wrapOnChangeWithAutoPanelOpen(child.props.name, child.props.onChange),
-          }
-        );
-      }
-
-      if (child.type === RawBody) {
-        return React.cloneElement<React.ComponentProps<typeof RawBody>>(
-          child as React.FunctionComponentElement<React.ComponentProps<typeof RawBody>>,
-          {
-            onChange: wrapOnChangeWithAutoPanelOpen(child.props.name, child.props.onChange),
-          }
-        );
-      }
-
-      return child;
-    });
-  }, [children, wrapOnChangeWithAutoPanelOpen]);
+      }),
+    [children, wrapOnChangeWithAutoPanelOpen]
+  );
 
   return (
     <Accordion openItems={openItems} collapsible multiple onToggle={handlePanelToggle}>

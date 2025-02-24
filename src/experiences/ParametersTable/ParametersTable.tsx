@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import { Badge } from '@fluentui/react-components';
-import InfoTable from '@/components/InfoTable';
+import InfoTable from 'experiences/InfoTable';
 import { ApiOperationParameter } from '@/types/apiOperation';
-import ScrollableTableContainer from '@/components/ScrollableTableContainer';
 import styles from './ParametersTable.module.scss';
 
 export interface Props {
@@ -58,10 +57,18 @@ export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) 
     [hiddenColumns]
   );
 
+  const columnLabels = useMemo(() => columns.map(({ title }) => title), []);
+
   return (
-    <ScrollableTableContainer>
-      <InfoTable dataItems={parameters} columns={columns} noDataMessage="No parameters" />
-    </ScrollableTableContainer>
+    <InfoTable columnLabels={columnLabels} noDataMessage="No parameters">
+      {parameters.map((parameter) => (
+        <InfoTable.Row key={parameter.name}>
+          {columns.map(({ key, renderer }) => (
+            <InfoTable.Cell key={key}>{renderer ? renderer(parameter[key]) : parameter[key]}</InfoTable.Cell>
+          ))}
+        </InfoTable.Row>
+      ))}
+    </InfoTable>
   );
 };
 
