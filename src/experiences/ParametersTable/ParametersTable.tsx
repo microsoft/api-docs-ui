@@ -57,7 +57,7 @@ export const ParametersTable: React.FC<Props> = ({ parameters, hiddenColumns }) 
     [hiddenColumns]
   );
 
-  const columnLabels = useMemo(() => columns.map(({ title }) => title), []);
+  const columnLabels = useMemo(() => columns.map(({ title }) => title), [columns]);
 
   return (
     <InfoTable columnLabels={columnLabels} noDataMessage="No parameters">
