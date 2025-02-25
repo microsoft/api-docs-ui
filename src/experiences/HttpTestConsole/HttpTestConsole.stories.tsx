@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { HttpReqData, HttpReqParam } from '@/types/testConsole';
+import { HttpReqBodyData, HttpReqData, HttpReqParam } from '@/types/testConsole';
 import { HttpBodyFormats } from '@/enums/HttpBodyFormats';
 import HttpTestConsole from './HttpTestConsole';
 
@@ -28,26 +28,22 @@ export const Default: Story = {
         { name: 'Authorization', value: 'Bearer 12345678' },
         { name: 'Content-Type', value: 'application/json' },
       ],
-      body: '',
+      body: { value: '', format: HttpBodyFormats.Raw } as HttpReqBodyData,
     });
 
     const handleChange = useCallback((name: string, value: HttpReqParam[]) => {
       setData((prev) => ({ ...prev, [name]: value }));
     }, []);
 
-    const handleBodyChange = useCallback((value: string) => {
+    const handleBodyChange = useCallback((value: HttpReqBodyData) => {
       setData((prev) => ({ ...prev, body: value }));
     }, []);
 
     const reqData = useMemo<HttpReqData>(
       () => ({
+        ...data,
         urlTemplate: 'https://local.host/api/v1/resource/{resourceId}',
         method: 'get',
-        urlParams: data.urlParams,
-        query: data.query,
-        headers: data.headers,
-        bodyFormat: HttpBodyFormats.RAW,
-        body: data.body,
       }),
       [data]
     );
@@ -70,21 +66,57 @@ export const Default: Story = {
           value={data.headers}
           onChange={handleChange}
         />
-        <HttpTestConsole.RawBody name="body" value={data.body} onChange={handleBodyChange} />
+        <HttpTestConsole.BodyForm name="body" value={data.body} onChange={handleBodyChange}>
+          <HttpTestConsole.BodyForm.Raw
+            dataSamples={[
+              {
+                name: 'Sample (json)',
+                value: '{\n  "key": "value"\n}',
+              },
+              {
+                name: 'Sample (xml)',
+                value: '<key>value</key>',
+              },
+            ]}
+          />
+          <HttpTestConsole.BodyForm.Binary />
+          <HttpTestConsole.BodyForm.FormData
+            fields={[
+              {
+                name: 'textField',
+                type: 'string',
+                fieldType: 'text',
+                description: 'Sample text field',
+                required: true,
+              },
+              {
+                name: 'selectField',
+                type: 'string',
+                fieldType: 'select',
+                description: 'Sample select field',
+                enum: ['one', 'two', 'three'],
+              },
+              {
+                name: 'numberField',
+                type: 'number',
+                description: 'Sample number field',
+                fieldType: 'number',
+              },
+              {
+                name: 'fileField',
+                type: 'binary',
+                description: 'Sample binary field',
+                fieldType: 'file',
+              },
+            ]}
+          />
+        </HttpTestConsole.BodyForm>
         <HttpTestConsole.RequestPreview
           name="request"
           reqData={reqData}
           schemas={{
             query: [],
-            headers: [
-              {
-                name: 'api_key',
-                type: 'string',
-                in: 'header',
-                required: false,
-                isSecret: true,
-              },
-            ],
+            headers: [{ name: 'Authorization', type: 'string', isSecret: true }],
             urlParams: [
               {
                 name: 'resourceId',

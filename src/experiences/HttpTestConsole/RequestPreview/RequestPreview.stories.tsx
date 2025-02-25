@@ -37,7 +37,6 @@ export const Default: Story = {
           value: 'sample_api_key',
         },
       ],
-      bodyFormat: HttpBodyFormats.RAW,
       body: undefined,
     },
     schemas: {

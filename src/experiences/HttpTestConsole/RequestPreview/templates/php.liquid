@@ -15,13 +15,13 @@ $headers = array(
 {%- endfor -%});
 curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 {%- endif %}
-{% if request.body != blank %}
+{% if request.body.value != blank %}
 # Request body
-{% if request.bodyFormat == "raw" -%}
-$request_body = '{{request.body}}';
-{%- elsif  request.bodyFormat == "binary" %}
-$file = fopen("< path\\to\\{{console.request.binary.name}} >", "r");
-$request_body = fread($file,filesize("< path\\to\\{{console.request.binary.name}} >"));
+{% if request.body.format == "raw" -%}
+$request_body = '{{request.body.value}}';
+{%- elsif  request.body.format == "binary" %}
+$file = fopen("< path\\to\\{{request.body.value.name}} >", "r");
+$request_body = fread($file,filesize("< path\\to\\{{request.body.value.name}} >"));
 fclose($file);
 {% endif %}
 curl_setopt($curl, CURLOPT_POSTFIELDS, $request_body);

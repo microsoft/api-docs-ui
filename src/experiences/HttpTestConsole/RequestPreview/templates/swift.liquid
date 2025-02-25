@@ -12,15 +12,15 @@ let headers = [
 {%- endfor %}
 ]
 request.allHTTPHeaderFields = headers
-{% if request.body != blank %}
+{% if request.body.value != blank %}
 // Request body
-{%- if request.bodyFormat == "raw" -%}
-{%- assign formattedBody = request.body | replace:'"','\\"' -%}
+{%- if request.body.format == "raw" -%}
+{%- assign formattedBody = request.body.value | replace:'"','\\"' -%}
 {%- assign formattedBody = formattedBody | replace: '\r\n', ' ' -%}
 {%- assign formattedBody = formattedBody | replace: '     ', ' ' %}
 let postString = "{{formattedBody}}"
 request.httpBody = postString.data(using: .utf8)
-{%- elsif  request.bodyFormat == "binary" %}
+{%- elsif  request.body.format == "binary" %}
 let file = "< path/to/{{request.binary.name}} >" 
 var result = ""
 if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {       

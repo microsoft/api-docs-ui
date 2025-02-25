@@ -10,13 +10,13 @@ try:
         '{{header.name}}': '{{header.value}}',
 {%- endfor %}
     }
-{% if request.body != blank %}
+{% if request.body.value != blank %}
     # Request body
-{%- if request.bodyFormat == "raw" %}
-    data =  {{request.body}}
+{%- if request.body.format == "raw" %}
+    data =  {{request.body.value}}
     data = json.dumps(data)
     req = urllib.request.Request(url, headers=hdr, data = bytes(data.encode("utf-8")))
-{%- elsif  request.bodyFormat == "binary" %}
+{%- elsif  request.body.format == "binary" %}
     with open('< path/to/{{request.binary.name}} >', 'rb') as f:
         data = f.read()
     req = urllib.request.Request(url, headers=hdr, data = bytes(data))

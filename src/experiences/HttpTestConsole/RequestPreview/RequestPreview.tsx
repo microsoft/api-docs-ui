@@ -5,6 +5,8 @@ import { Liquid } from 'liquidjs';
 import { Button, Dropdown, Option, Tooltip } from '@fluentui/react-components';
 import { Stack } from '@fluentui/react';
 import { EyeOffRegular, EyeRegular } from '@fluentui/react-icons';
+import memoizee from 'memoizee';
+import { isPlainObject } from 'lodash';
 import { HttpReqData, HttpParamSchemasByLocation } from '@/types/testConsole';
 import CopyToClipboard from '@/experiences/CopyToClipboard';
 import { normalizeReqData, resolveUrlFromReqData } from '../utils';
@@ -37,12 +39,51 @@ const REQUEST_LANGUAGES = [
 
 type Languages = keyof typeof templates;
 
+/**
+ * Serializes object to a format that is compatible with Liquid template engine.
+ * It is mainly needed to serialize File objects to a plain object.
+ */
+const serializeObjectToLiquidCompatible = memoizee((input: unknown): unknown => {
+  if (input instanceof Array) {
+    return input.map((item) => serializeObjectToLiquidCompatible(item));
+  }
+
+  if (!isPlainObject(input)) {
+    return input;
+  }
+
+  return Object.entries(input).reduce((acc, [key, value]) => {
+    if (value instanceof File) {
+      return {
+        ...acc,
+        [key]: {
+          name: value.name,
+          type: value.type,
+          size: value.size,
+        },
+      };
+    }
+
+    if (typeof value === 'object') {
+      return {
+        ...acc,
+        [key]: serializeObjectToLiquidCompatible(value),
+      };
+    }
+
+    return {
+      ...acc,
+      [key]: value,
+    };
+  }, {});
+});
+
 function renderCode(language: Languages, reqData: HttpReqData): string {
   const liquid = new Liquid();
 
   return liquid
     .parseAndRenderSync(templates[language], {
-      request: reqData,
+      request: serializeObjectToLiquidCompatible(reqData),
       resolvedUrl: resolveUrlFromReqData(reqData),
     })
     .trim();

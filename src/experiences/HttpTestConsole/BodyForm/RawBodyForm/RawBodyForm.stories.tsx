@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import HttpTestConsole from '../HttpTestConsole';
-import RawBody from './RawBody';
+import RawBodyForm from './RawBodyForm';
 
 const meta = {
-  title: 'HttpTestConsole/HttpTestConsole.RawBody',
-  component: RawBody,
+  title: 'HttpTestConsole/HttpTestConsole.BodyForm/HttpTestConsole.BodyForm.Raw',
+  component: RawBodyForm,
   parameters: {
     docs: {
-      subtitle: 'An HttpTestConsole raw body editor panel.',
+      subtitle: 'An HttpTestConsole raw body editor form.',
     },
   },
-} satisfies Meta<typeof RawBody>;
+} satisfies Meta<typeof RawBodyForm>;
 
 export default meta;
 
@@ -19,24 +18,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    name: 'body',
     value: '',
     onChange: () => {},
   },
   render: (props) => {
     const [value, setValue] = useState(props.value);
 
-    return (
-      <HttpTestConsole>
-        <HttpTestConsole.RawBody {...props} value={value} onChange={setValue} />
-      </HttpTestConsole>
-    );
+    return <RawBodyForm {...props} value={value} onChange={setValue} />;
   },
 };
 
 export const WithDataSamples: Story = {
   args: {
-    name: 'body',
     value: '',
     dataSamples: [
       {
@@ -53,10 +46,6 @@ export const WithDataSamples: Story = {
   render: (props) => {
     const [value, setValue] = useState(props.value);
 
-    return (
-      <HttpTestConsole>
-        <HttpTestConsole.RawBody {...props} value={value} onChange={setValue} />
-      </HttpTestConsole>
-    );
+    return <RawBodyForm {...props} value={value} onChange={setValue} />;
   },
 };

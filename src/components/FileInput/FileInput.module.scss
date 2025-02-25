@@ -1,0 +1,16 @@
+.fileInput {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .fileName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  input {
+    position: fixed;
+    top: -100000px;
+  }
+}

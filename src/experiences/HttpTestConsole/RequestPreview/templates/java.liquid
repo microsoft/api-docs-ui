@@ -25,11 +25,11 @@ public class HelloWorld {
 {% endfor %}
         connection.setRequestMethod("{{request.method}}");
 {% if request.method == "POST" or request.method == "PUT" -%}
-    {%- if request.body != blank %}
+    {%- if request.body.value != blank %}
         // Request body
         connection.setDoOutput(true);
-    {%- if request.bodyFormat == "raw"  -%}
-    {%- assign formattedBody = request.body | replace:'"','\\"' -%}
+    {%- if request.body.format == "raw"  -%}
+    {%- assign formattedBody = request.body.value | replace:'"','\\"' -%}
     {%- assign formattedBody = formattedBody | replace: '\r\n', ' ' -%}
     {%- assign formattedBody = formattedBody | replace: '\n', ' ' -%}
     {%- assign formattedBody = formattedBody | replace: '     ', ' ' %}
@@ -38,8 +38,8 @@ public class HelloWorld {
             .write(
              "{{formattedBody}}".getBytes()
              );
-    {%- elsif request.bodyFormat == "binary" %}
-        String fileName = "< path/to/{{console.request.binary.name}} >";
+    {%- elsif request.body.format == "binary" %}
+        String fileName = "< path/to/{{request.body.value.name}} >";
         InputStream is = new FileInputStream(fileName);
         byte[] bytes = new byte[(int) is.available()];
         DataInputStream dataInputStream = new DataInputStream(is);

@@ -5,12 +5,12 @@ import { Stack } from '@fluentui/react';
 import { getDefaultOpenItems } from '@/experiences/HttpTestConsole/utils';
 import TestConsolePanel from './TestConsolePanel';
 import ParamsListForm from './ParamsListForm';
-import RawBody from './RawBody';
+import BodyForm from './BodyForm';
 import RequestPreview from './RequestPreview';
 
 const subComponents = {
   ParamsListForm,
-  RawBody,
+  BodyForm,
   RequestPreview,
   Panel: TestConsolePanel,
 };
@@ -53,9 +53,9 @@ export const HttpTestConsole: React.FC<Props> = ({ children }) => {
           );
         }
 
-        if (child.type === RawBody) {
-          return React.cloneElement<React.ComponentProps<typeof RawBody>>(
-            child as React.FunctionComponentElement<React.ComponentProps<typeof RawBody>>,
+        if (child.type === BodyForm) {
+          return React.cloneElement<React.ComponentProps<typeof BodyForm>>(
+            child as React.FunctionComponentElement<React.ComponentProps<typeof BodyForm>>,
             {
               onChange: wrapOnChangeWithAutoPanelOpen(child.props.name, child.props.onChange),
             }

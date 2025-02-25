@@ -103,17 +103,17 @@ namespace CSHttpClientSample
 
 {% when "POST" %}
             HttpResponseMessage response;
-            {%- if request.body != blank %}
+            {%- if request.body.value != blank %}
             // Request body
-{%- if request.bodyFormat == "raw"  -%}
+{%- if request.body.format == "raw"  -%}
             {%- assign formattedBody = console.requestbody | replace:'"','\\"' -%}
             {%- assign formattedBody = formattedBody | replace: '\r\n', ' ' -%}
             {%- assign formattedBody = formattedBody | replace: '     ', ' ' %}
 
             using (var content = new StringContent("{{formattedBody}}"))
             {
-{%- elsif request.bodyFormat == "binary" %}
-            using (var content = new StreamContent(File.OpenRead(" < path\\to\\{{console.request.binary.name}} > ")))
+{%- elsif request.body.format == "binary" %}
+            using (var content = new StreamContent(File.OpenRead(" < path\\to\\{{request.body.value.name}} > ")))
             {
 {%- endif %}
     {%- for header in request.headers -%}
@@ -152,16 +152,16 @@ namespace CSHttpClientSample
             var response = await client.DeleteAsync(uri);
 {% when "PUT" %}
             HttpResponseMessage response;
-{% if request.body != blank %}
+{% if request.body.value != blank %}
             // Request body
-{%- if request.bodyFormat == "raw"  -%}
-            {%- assign formattedBody = request.body | replace:'"','\\"' -%}
+{%- if request.body.format == "raw"  -%}
+            {%- assign formattedBody = request.body.value | replace:'"','\\"' -%}
             {%- assign formattedBody = formattedBody | replace: '\r\n', ' ' -%}
             {%- assign formattedBody = formattedBody | replace: '     ', ' ' %}
             using (var content = new StringContent("{{formattedBody}}"))
             {
-{%- elsif request.bodyFormat == "binary" %}
-            using (var content = new  StreamContent(File.OpenRead(" < path\\to\\{{console.request.binary.name}} > ")))
+{%- elsif request.body.format == "binary" %}
+            using (var content = new  StreamContent(File.OpenRead(" < path\\to\\{{request.body.value.name}} > ")))
             {
 {%- endif %}
 {%- for header in request.headers -%}

@@ -1,4 +1,5 @@
 export enum HttpBodyFormats {
-  RAW = 'raw',
-  BINARY = 'binary',
+  Raw = 'raw',
+  Binary = 'binary',
+  FormData = 'formData',
 }

@@ -5,7 +5,7 @@ import { ApiOperationParameter } from '@/types/apiOperation';
 import { HttpReqData, HttpReqParam, HttpParamSchemasByLocation } from '@/types/testConsole';
 import TestConsolePanel from './TestConsolePanel';
 import ParamsListForm from './ParamsListForm';
-import RawBody from './RawBody';
+import BodyForm from './BodyForm';
 import RequestPreview from './RequestPreview';
 
 /**
@@ -23,7 +23,7 @@ export const getDefaultOpenItems = memoizee((children: React.ReactNode): string[
           return child.props.value.length;
         }
 
-        if (child.type === RawBody) {
+        if (child.type === BodyForm) {
           return child.props.value !== undefined;
         }
 
@@ -96,6 +96,12 @@ export function normalizeReqData(
   normalized.headers = uniqBy(normalized.headers.filter(completeDataPredicate), 'name').map(
     getSecretResolver(schemas.headers)
   );
+
+  if (!normalized.body) {
+    // This assignment is safe as it will only be used in Liquid template engine
+    // eslint-disable-next-line
+    normalized.body = {} as any;
+  }
 
   return normalized;
 }

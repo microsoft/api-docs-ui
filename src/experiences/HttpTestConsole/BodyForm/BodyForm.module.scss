@@ -1,4 +1,4 @@
-.rawBody {
+.bodyForm {
   .header {
     display: flex;
     flex: 1;
@@ -6,17 +6,8 @@
     justify-content: space-between;
   }
 
-  .bodyTextArea {
-    width: 100%;
-    min-height: 200px;
-  }
-
-  .sampleDropdown {
-    margin-bottom: 16px;
-  }
-
-  .revertBtn {
-    margin-top: 16px;
+  .formatPicker {
+    margin-bottom: 14px;
   }
 
   .empty {

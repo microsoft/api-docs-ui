@@ -1,12 +1,15 @@
-{% if request.body != blank and request.bodyFormat == "raw" %}
+{% if request.body.value != blank and request.body.format == "raw" %}
   // Request body
-  const body = {{request.body}};
+  const body = {{request.body.value}};
 {% endif %}
 
 fetch('{{resolvedUrl}}', {
   method: '{{request.method | upcase}}',
-{%- if request.body != blank %}
+{%- if request.body.value != blank and request.body.format == "raw" %}
   body: JSON.stringify(body),
+{%- endif -%}
+{%- if request.body.value != blank and request.body.format == "binary" %}
+  body: File<{{ request.body.value.name }}>,
 {%- endif -%}
 {% if request.headers.size > 0 %}
   // Request headers
