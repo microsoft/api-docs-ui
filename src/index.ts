@@ -15,3 +15,4 @@ export { default as InfoTable } from './experiences/InfoTable';
 export { default as MarkdownRenderer } from './experiences/MarkdownRenderer';
 export { default as ParametersTable } from './experiences/ParametersTable';
 export { default as RawSchema } from './experiences/RawSchema';
+export { default as SyntaxHighlighter } from './experiences/SyntaxHighlighter';

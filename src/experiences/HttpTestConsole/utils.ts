@@ -2,7 +2,8 @@ import React from 'react';
 import memoizee from 'memoizee';
 import { uniqBy } from 'lodash';
 import { ApiOperationParameter } from '@/types/apiOperation';
-import { HttpReqData, HttpReqParam, HttpParamSchemasByLocation } from '@/types/testConsole';
+import { HttpParamSchemasByLocation, HttpReqData, HttpReqParam, ResolvedHttpReqData } from '@/types/testConsole';
+import { HttpBodyFormats } from '@/enums/HttpBodyFormats';
 import TestConsolePanel from './TestConsolePanel';
 import ParamsListForm from './ParamsListForm';
 import BodyForm from './BodyForm';
@@ -11,9 +12,9 @@ import RequestPreview from './RequestPreview';
 /**
  * Returns the names of the items that should be open by default.
  */
-export const getDefaultOpenItems = memoizee((children: React.ReactNode): string[] => {
+export const getDefaultOpenItems = memoizee((children: React.ReactNode[]): string[] => {
   return (
-    React.Children.toArray(children)
+    children
       .filter((child) => {
         if (!React.isValidElement(child)) {
           return false;
@@ -114,6 +115,10 @@ export function validateParamsList(
   paramSchemas: ApiOperationParameter[]
 ): Array<null | string> {
   return params.map((param, i) => {
+    if (!param.name) {
+      return null;
+    }
+
     if (params.slice(0, i).find(({ name }) => name === param.name)) {
       return `Parameter with this name already exists`;
     }
@@ -130,4 +135,34 @@ export function validateParamsList(
 
     return null;
   });
+}
+
+function resolveHttpReqBody(reqData: HttpReqData): ResolvedHttpReqData['body'] {
+  if (!reqData.body) {
+    return undefined;
+  }
+
+  if (reqData.body.format === HttpBodyFormats.FormData) {
+    const formData = new FormData();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Object.entries(reqData.body.value as Record<string, any>).forEach(([name, value]) => {
+      formData.append(name, value);
+    });
+    return formData;
+  }
+
+  if (reqData.body.format === HttpBodyFormats.Binary) {
+    return reqData.body.value as File;
+  }
+
+  return reqData.body.value as string;
+}
+
+/** Resolves complete request data with provided schemas. */
+export function resolveHttpReqData(reqData: HttpReqData, schemas: HttpParamSchemasByLocation): ResolvedHttpReqData {
+  return {
+    ...normalizeReqData(reqData, schemas),
+    url: resolveUrlFromReqData(reqData),
+    body: resolveHttpReqBody(reqData),
+  };
 }

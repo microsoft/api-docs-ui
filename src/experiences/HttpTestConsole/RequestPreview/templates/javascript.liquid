@@ -1,6 +1,6 @@
 {% if request.body.value != blank and request.body.format == "raw" %}
-  // Request body
-  const body = {{request.body.value}};
+// Request body
+const body = {{request.body.value}};
 {% endif %}
 
 fetch('{{resolvedUrl}}', {

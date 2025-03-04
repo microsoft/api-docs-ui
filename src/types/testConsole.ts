@@ -32,3 +32,12 @@ export interface HttpReqData {
   headers: HttpReqParam[];
   body?: HttpReqBodyData;
 }
+
+export interface ResolvedHttpReqData {
+  url: string;
+  method: string;
+  urlParams: HttpReqParam[];
+  query: HttpReqParam[];
+  headers: HttpReqParam[];
+  body?: string | FormData | File | null;
+}

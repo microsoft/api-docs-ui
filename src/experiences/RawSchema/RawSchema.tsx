@@ -1,7 +1,6 @@
 import React from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { a11yLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import InfoPanel from '@/experiences/InfoPanel';
+import SyntaxHighlighter from '@/experiences/SyntaxHighlighter';
 import CopyToClipboard from '@/experiences/CopyToClipboard';
 import styles from './RawSchema.module.scss';
 
@@ -24,9 +23,7 @@ export const RawSchema: React.FC<Props> = ({ title, schema, language }) => {
       }
       className={styles.rawSchema}
     >
-      <SyntaxHighlighter language={language} customStyle={{ padding: 0, margin: 0 }} style={a11yLight}>
-        {schema}
-      </SyntaxHighlighter>
+      <SyntaxHighlighter language={language}>{schema}</SyntaxHighlighter>
     </InfoPanel>
   );
 };

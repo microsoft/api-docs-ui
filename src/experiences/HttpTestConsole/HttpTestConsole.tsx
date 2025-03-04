@@ -1,14 +1,15 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { xor } from 'lodash';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { difference, xor } from 'lodash';
 import { Accordion } from '@fluentui/react-components';
 import { Stack } from '@fluentui/react';
-import { getDefaultOpenItems } from '@/experiences/HttpTestConsole/utils';
+import { getDefaultOpenItems, resolveHttpReqData } from '@/experiences/HttpTestConsole/utils';
 import TestConsolePanel from './TestConsolePanel';
 import ParamsListForm from './ParamsListForm';
 import BodyForm from './BodyForm';
 import RequestPreview from './RequestPreview';
 
 const subComponents = {
+  resolveHttpReqData,
   ParamsListForm,
   BodyForm,
   RequestPreview,
@@ -22,7 +23,31 @@ export interface Props {
 type ResultType = React.NamedExoticComponent<Props> & typeof subComponents;
 
 export const HttpTestConsole: React.FC<Props> = ({ children }) => {
-  const [openItems, setOpenItems] = useState(getDefaultOpenItems(children));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [panelNames, setPanelNames] = useState([]);
+  const [openItems, setOpenItems] = useState([]);
+
+  // Detect new panels appearance and expand them if needed
+  useEffect(() => {
+    const childrenArr = React.Children.toArray(children);
+    const currentNames = childrenArr
+      .filter((child) => React.isValidElement(child))
+      .map((child) => (child as React.ReactElement).props.name);
+    let newPanels = [];
+
+    setPanelNames((prev) => {
+      newPanels = difference(currentNames, prev);
+      return currentNames;
+    });
+
+    setOpenItems((prev) =>
+      prev.concat(
+        getDefaultOpenItems(
+          childrenArr.filter((child) => !React.isValidElement(child) || newPanels.includes(child.props.name))
+        )
+      )
+    );
+  }, [children]);
 
   const handlePanelToggle = useCallback<React.ComponentProps<typeof Accordion>['onToggle']>((_, data) => {
     setOpenItems((prev) => xor(prev, [String(data.value)]));
