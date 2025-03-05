@@ -14,6 +14,8 @@ export interface Props {
   name: string;
   /** Panel title. */
   title: string;
+  /** Custom add button label. */
+  addBtnLabel?: string;
   /** Current value (list of key-value pairs). */
   value: HttpReqParam[];
   /** List of available parameter definitions. Note that if there are required parameters, they must be present in value. */
@@ -24,7 +26,15 @@ export interface Props {
   onChange: (name: string, value: HttpReqParam[]) => void;
 }
 
-export const ParamsListForm: React.FC<Props> = ({ name, title, value, params = [], isStrictSchema, onChange }) => {
+export const ParamsListForm: React.FC<Props> = ({
+  name,
+  title,
+  addBtnLabel = 'Add',
+  value,
+  params = [],
+  isStrictSchema,
+  onChange,
+}) => {
   const errors = useMemo(() => validateParamsList(value, params), [value, params]);
 
   const handleAddClick = useCallback(
@@ -71,7 +81,7 @@ export const ParamsListForm: React.FC<Props> = ({ name, title, value, params = [
           </Stack>
           {!isStrictSchema && (
             <Button as="a" size="small" icon={<AddCircleRegular />} onClick={handleAddClick}>
-              Add
+              {addBtnLabel}
             </Button>
           )}
         </div>
@@ -80,10 +90,6 @@ export const ParamsListForm: React.FC<Props> = ({ name, title, value, params = [
       {!value.length && (
         <div className={styles.empty}>
           <span>No items</span>
-
-          <Button appearance="subtle" size="small" icon={<AddCircleRegular />} onClick={handleAddClick}>
-            Add
-          </Button>
         </div>
       )}
       {value.map((field, index) => {

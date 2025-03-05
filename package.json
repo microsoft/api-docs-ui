@@ -11,9 +11,12 @@
     "build-storybook": "storybook build -o storybook-static",
     "release": "sh ./scripts/release.sh"
   },
+  "peerDependencies": {
+    "@fluentui/react-components": "9.x",
+    "@fluentui/react-icons": "2.x",
+    "@fluentui/react": "8.x"
+  },
   "dependencies": {
-    "@fluentui/react-components": "9.56.8",
-    "@fluentui/react-icons": "2.0.270",
     "classnames": "2.5.1",
     "liquidjs": "10.20.3",
     "memoizee": "0.4.17",
@@ -29,6 +32,8 @@
     "@eslint/compat": "1.2.4",
     "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.17.0",
+    "@fluentui/react-components": "9.56.8",
+    "@fluentui/react-icons": "2.0.270",
     "@fluentui/react": "8.122.2",
     "@storybook/addon-essentials": "8.4.7",
     "@storybook/blocks": "8.4.7",

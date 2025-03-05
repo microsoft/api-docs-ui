@@ -11,7 +11,6 @@ import { HttpReqData, HttpParamSchemasByLocation } from '@/types/testConsole';
 import CopyToClipboard from '@/experiences/CopyToClipboard';
 import { normalizeReqData, resolveUrlFromReqData } from '../utils';
 import TestConsolePanel from '../TestConsolePanel';
-import { getFluentProviderRoot } from '@/utils/fluent';
 import templates from './templates';
 
 export interface Props {
@@ -145,11 +144,7 @@ export const RequestPreview: React.FC<Props> = ({ name, title = 'HTTP Request', 
 
         <CopyToClipboard appearance="subtle" content={codeForCopy} />
         {hasSecrets && (
-          <Tooltip
-            content={showSecrets ? 'Hide secrets' : 'Reveal secrets'}
-            mountNode={getFluentProviderRoot()}
-            relationship="label"
-          >
+          <Tooltip content={showSecrets ? 'Hide secrets' : 'Reveal secrets'} relationship="label">
             <Button
               icon={showSecrets ? <EyeOffRegular /> : <EyeRegular />}
               appearance="subtle"
