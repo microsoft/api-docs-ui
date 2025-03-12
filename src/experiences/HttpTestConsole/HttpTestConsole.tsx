@@ -26,6 +26,7 @@ export const HttpTestConsole: React.FC<Props> = ({ children }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [panelNames, setPanelNames] = useState([]);
   const [openItems, setOpenItems] = useState([]);
+  const [autoOpenParamByName, setAutoOpenParamByName] = useState<Record<string, unknown>>({});
 
   // Detect new panels appearance and expand them if needed
   useEffect(() => {
@@ -53,14 +54,22 @@ export const HttpTestConsole: React.FC<Props> = ({ children }) => {
     setOpenItems((prev) => xor(prev, [String(data.value)]));
   }, []);
 
-  // Wrapper for collapsible panels onChange prop that will automatically open the panel on value change if it was not open already
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const wrapOnChangeWithAutoPanelOpen = useCallback(<T extends any[], U>(name: string, cb: (...args: T) => U) => {
-    return (...args: T): U => {
+  const autoOpenPanelOnParamChange = useCallback(
+    (name: string, param: unknown) => {
+      const prevParam = autoOpenParamByName[name];
+
+      if (prevParam !== param) {
+        setAutoOpenParamByName((prev) => ({ ...prev, [name]: param }));
+      }
+
+      if (!(name in autoOpenParamByName) || prevParam === param) {
+        return;
+      }
+
       setOpenItems((prev) => (prev.includes(name) ? prev : [...prev, name]));
-      return cb(...args);
-    };
-  }, []);
+    },
+    [autoOpenParamByName]
+  );
 
   const extendedChildren = useMemo(
     () =>
@@ -69,27 +78,13 @@ export const HttpTestConsole: React.FC<Props> = ({ children }) => {
           return child;
         }
 
-        if (child.type === ParamsListForm) {
-          return React.cloneElement<React.ComponentProps<typeof ParamsListForm>>(
-            child as React.FunctionComponentElement<React.ComponentProps<typeof ParamsListForm>>,
-            {
-              onChange: wrapOnChangeWithAutoPanelOpen(child.props.name, child.props.onChange),
-            }
-          );
-        }
-
-        if (child.type === BodyForm) {
-          return React.cloneElement<React.ComponentProps<typeof BodyForm>>(
-            child as React.FunctionComponentElement<React.ComponentProps<typeof BodyForm>>,
-            {
-              onChange: wrapOnChangeWithAutoPanelOpen(child.props.name, child.props.onChange),
-            }
-          );
+        if (child.type === ParamsListForm || child.type === BodyForm) {
+          autoOpenPanelOnParamChange(child.props.name, child.props.value);
         }
 
         return child;
       }),
-    [children, wrapOnChangeWithAutoPanelOpen]
+    [autoOpenPanelOnParamChange, children]
   );
 
   return (

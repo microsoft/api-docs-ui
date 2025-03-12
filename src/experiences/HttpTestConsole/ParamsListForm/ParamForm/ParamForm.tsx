@@ -33,7 +33,13 @@ export const ParamForm: React.FC<Props> = ({ value, definition, error, onRemove,
   function renderValueField() {
     if (definition?.enum) {
       return (
-        <Select placeholder="Value..." name="value" value={value.value} onChange={handleFieldChange}>
+        <Select
+          placeholder="Value..."
+          name="value"
+          value={value.value}
+          disabled={definition?.readOnly}
+          onChange={handleFieldChange}
+        >
           {definition.enum.map((value) => (
             <option key={value}>{value}</option>
           ))}
@@ -47,6 +53,7 @@ export const ParamForm: React.FC<Props> = ({ value, definition, error, onRemove,
         type={definition?.isSecret && !isSecretRevealed ? 'password' : 'text'}
         name="value"
         value={value.value}
+        readOnly={definition?.readOnly}
         onChange={handleFieldChange}
       />
     );
@@ -70,7 +77,7 @@ export const ParamForm: React.FC<Props> = ({ value, definition, error, onRemove,
             placeholder="Name..."
             name="name"
             value={value.name}
-            disabled={definition?.required}
+            readOnly={definition?.required}
             onChange={handleFieldChange}
           />
         </Field>

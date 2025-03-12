@@ -35,6 +35,28 @@ export const ParamsListForm: React.FC<Props> = ({
   isStrictSchema,
   onChange,
 }) => {
+  const definitions = useMemo(
+    () =>
+      value.map((field, index) => {
+        const data = value[index];
+        const definition = params.find(({ name }) => name === data.name);
+        const isDuplicate = !!value.slice(0, index).find(({ name }) => name === data.name);
+
+        // Sometimes parameter may become required or readonly in runtime (for example, when oauth token is retrieved and injected).
+        // If a parameter with the same name already existed, we need to allow its deletion.
+        if (isDuplicate) {
+          return {
+            ...definition,
+            required: false,
+            readOnly: false,
+          };
+        }
+
+        return definition;
+      }),
+    [params, value]
+  );
+
   const errors = useMemo(() => validateParamsList(value, params), [value, params]);
 
   const handleAddClick = useCallback(
@@ -93,7 +115,7 @@ export const ParamsListForm: React.FC<Props> = ({
         </div>
       )}
       {value.map((field, index) => {
-        const definition = params.find(({ name }) => name === field.name);
+        const definition = definitions[index];
 
         return (
           <ParamForm
