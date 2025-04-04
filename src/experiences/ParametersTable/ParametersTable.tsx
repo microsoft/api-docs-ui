@@ -11,7 +11,11 @@ interface ColumnConfig {
   autoHide?: boolean;
 }
 
-function badgeRenderer(value: string) {
+function badgeRenderer(value?: string) {
+  if (!value) {
+    return null;
+  }
+
   return (
     <Badge className={styles.badge} appearance="tint" color="informative" shape="rounded">
       {value}
@@ -74,7 +78,7 @@ const columnOrder: Array<keyof typeof columnConfigByKey> = [
 
 export interface Props {
   /** List of API request parameters */
-  parameters: ApiOperationParameter[];
+  parameters: Array<Partial<ApiOperationParameter>>;
   /** List of columns to hide */
   hiddenColumns?: Array<keyof typeof columnConfigByKey>;
 }
