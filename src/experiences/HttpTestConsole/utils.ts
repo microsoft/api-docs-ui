@@ -159,9 +159,13 @@ function resolveHttpReqBody(reqData: HttpReqData): ResolvedHttpReqData['body'] {
 }
 
 /** Resolves complete request data with provided schemas. */
-export function resolveHttpReqData(reqData: HttpReqData, schemas: HttpParamSchemasByLocation): ResolvedHttpReqData {
+export function resolveHttpReqData(
+  reqData: HttpReqData,
+  schemas: HttpParamSchemasByLocation,
+  showSecrets = false
+): ResolvedHttpReqData {
   return {
-    ...normalizeReqData(reqData, schemas),
+    ...normalizeReqData(reqData, schemas, showSecrets),
     url: resolveUrlFromReqData(reqData),
     body: resolveHttpReqBody(reqData),
   };
