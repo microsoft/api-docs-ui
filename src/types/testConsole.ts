@@ -1,5 +1,5 @@
-import { ApiOperationParameter } from '@/types/apiOperation';
-import { HttpBodyFormats } from '@/enums/HttpBodyFormats';
+import { ApiOperationParameter } from './apiOperation';
+import { HttpBodyFormats } from '../enums/HttpBodyFormats';
 
 export interface HttpRawBodyDataSample {
   name: string;
