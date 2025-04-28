@@ -15,9 +15,7 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
